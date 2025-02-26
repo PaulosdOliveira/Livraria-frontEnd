@@ -4,12 +4,43 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+
 }
+
+
+html {
+  background-color: rgba(240, 220, 200, 0.100);
+  height: 100%;
+
+}
+
+header {
+  margin: auto;
+  height: 18vh;
+  width: 97vw;
+}
+
+main {
+  height: auto;
+}
+
+.inputHeader {
+  text-align: center;
+  margin: auto;
+}
+
+div.menu {
+  height: auto;
+}
+
+
+
+
+
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
+
     --foreground: #ededed;
   }
 }
@@ -18,4 +49,77 @@ body {
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+
+}
+
+
+@media all {
+  #itemMenu:hover {
+    transform: translate(-2%, -3%);
+    background-color: rgb(51, 65, 85);
+    color: aliceblue;
+  }
+
+  .cardLivro {
+    padding-top: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.100);
+    box-shadow: 3px 3px 2px rgba(0, 0, 0, 0.200);
+    background-color: aliceblue;
+    position: relative;
+    z-index: 1;
+    font-size: .8em;
+  }
+
+  .cardLivro:hover {
+    z-index: 2;
+    cursor: pointer;
+    transform: translate(0, -6px);
+  }
+
+  div#capaLivro {
+    background-image: url("https://static.wixstatic.com/media/31a549_7dffb191bffa440686e5a148b8e042d9~mv2.jpg/v1/fill/w_480,h_768,al_c,q_85,usm_0.66_1.00_0.01,enc_auto/31a549_7dffb191bffa440686e5a148b8e042d9~mv2.jpg");
+    background-size: cover;
+
+  }
+
+  .test {
+    display: inline-block;
+  }
+
+}/* fim de mídia principal */
+
+
+
+@media screen and (min-width: 700px) and (max-width: 1600px) {
+
+  .cardLivro {
+    width: 193px;
+  }
+
+  .test {
+    display: inline-block;
+  }
+
+} /*Fim das telas grandes */
+
+@media screen and (max-width: 700px) {
+
+  .cardLivro {
+    width: 160px;
+    
+  }
+
+
+
+  div#capaLivro {
+    width: 120px;
+    height: 160px;
+  }
+
+
+  .test {
+    margin: 0px 15.5px 45px 15.5px;
+    height: 250px;
+    width: 180px;
+  }
 }
