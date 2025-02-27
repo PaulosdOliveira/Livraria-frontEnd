@@ -2,25 +2,15 @@
 
 import { useState } from "react"
 import { ItemLista } from "@/components/ItemLista/ItemLista";
-import { LivrosGenero, LivrosPesquisa, Principal } from "@/components/Livros/Livros"
 
 
 
-export default function Template() {
+interface templateProps {
+    children?: React.ReactNode;
+}
 
+export const Template: React.FC<templateProps> = ({ children }) => {
 
-    const [children, setChildren] = useState<React.ReactNode>(<LivrosPesquisa/>);
-    const [inicio, setInicio] = useState<boolean>(true);
-
-    function mudar() {
-        if (inicio) {
-            setInicio(false);
-            setChildren(<LivrosPesquisa />);
-        } else {
-            setInicio(true);
-            setChildren(<LivrosGenero />);
-        }
-    }
 
     return (
         <>
@@ -31,9 +21,7 @@ export default function Template() {
                         <i className="text-gray-600 border  scale-75  material-icons ">tune</i>
                     </div>
                 </section>
-                <Principal>
-                    {children}
-                </Principal>
+               {children}
             </Main>
             <Footer />
         </>
@@ -103,9 +91,9 @@ const Menu: React.FC = () => {
     )
 }
 
-const Footer: React.FC = () => {
+export const Footer: React.FC = () => {
     return (
-        <footer className=" py-5 border border-gray-50 mt-12 bg-red-300">
+        <footer className=" py-5 border border-gray-50 mt-12 bg-gray-300">
             <p className="text-gray-700 text-center ">Desenvolvido por Paulo Oliveiras</p>
         </footer>
     )

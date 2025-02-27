@@ -86,7 +86,31 @@ body {
     display: inline-block;
   }
 
-}/* fim de mídia principal */
+  #caixas {
+    display: flex;
+    flex-flow: column wrap;
+    flex-wrap: wrap;
+    align-items: center;
+    height: auto;
+    padding-top: 5%;
+  }
+
+  input.form {
+    width: 87%;
+    height: 45px;
+    margin: 6px 0px 6px 0px;
+    border-radius: 14px;
+    padding-left: 25px;
+    color: black;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    border: 1px solid rgba(0,0,0,0.300);
+  }
+
+
+
+}
+
+/* fim de mídia principal */
 
 
 
@@ -100,13 +124,15 @@ body {
     display: inline-block;
   }
 
-} /*Fim das telas grandes */
+}
+
+/*Fim das telas grandes */
 
 @media screen and (max-width: 700px) {
 
   .cardLivro {
     width: 160px;
-    
+
   }
 
 

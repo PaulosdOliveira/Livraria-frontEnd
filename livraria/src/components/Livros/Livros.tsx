@@ -8,7 +8,7 @@ interface livroSection {
 }
 
 interface PrincipalComponente {
-    children: React.ReactNode;
+    children?: React.ReactNode;
 }
 
 
