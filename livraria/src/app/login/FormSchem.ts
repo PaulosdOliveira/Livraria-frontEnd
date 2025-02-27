@@ -2,7 +2,7 @@ import * as yup from 'yup'
 
 
 export interface formProps {
-    nome: string;
+    nome: string ;
     email: string;
     senha: string;
     senhaBate: string;
@@ -16,4 +16,4 @@ export const ValidarForm = yup.object().shape({
     senhaBate: yup.string().oneOf([yup.ref("senha")], "Senhas não batem! ")
 })
 
-export const FormEsquema: formProps = {email: '', nome: '', senha: '', senhaBate: ''};
+export const FormEsquema: formProps = {email: '', nome: 'Nome do usuários', senha: '', senhaBate: ''};

@@ -1,8 +1,17 @@
-import Image from "next/image";
-import {Template} from "@/components/Template";
+'use client'
+import { UseAuth } from "@/resources/Usuarios/LoginService"
+import Biblioteca from "./biblioteca/page";
+import Login from "./login/page";
+
 
 export default function Home() {
-  return (
-   <Template></Template>
-  );
+
+  const auth = UseAuth();
+  const usuario = auth.getSessaoUsuario;
+  if (!usuario) {
+    return (<Login></Login>);
+  }
+  return (<Biblioteca></Biblioteca>);
+
+
 }

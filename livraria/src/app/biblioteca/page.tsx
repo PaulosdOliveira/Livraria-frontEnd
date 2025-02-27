@@ -1,16 +1,15 @@
 'use client'
 
 import { LivrosPesquisa, Principal } from "@/components/Livros/Livros"
-import {Template} from "@/components/Template"
+import { Template } from "@/components/Template"
 
 
-export default function Biblioteca(){
-    return(
+export default function Biblioteca() {
+    return (
         <Template>
-           <Principal>
-            <LivrosPesquisa/>
-           </Principal>
+            <LivrosPesquisa />
         </Template>
+
     )
 }
 

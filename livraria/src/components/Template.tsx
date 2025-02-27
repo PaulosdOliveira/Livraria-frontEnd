@@ -1,7 +1,9 @@
-'use client'
 
 import { useState } from "react"
 import { ItemLista } from "@/components/ItemLista/ItemLista";
+import { UseAuth } from "@/resources/Usuarios/LoginService";
+import { useRouter } from "next/navigation"
+
 
 
 
@@ -16,12 +18,7 @@ export const Template: React.FC<templateProps> = ({ children }) => {
         <>
             <Header />
             <Main >
-                <section className="px-6 flex  mb-12 ">
-                    <div className=" hover:cursor-pointer  px-2  h-6 my-0.5 bg-gray-200   ">
-                        <i className="text-gray-600 border  scale-75  material-icons ">tune</i>
-                    </div>
-                </section>
-               {children}
+                {children}
             </Main>
             <Footer />
         </>
@@ -54,9 +51,14 @@ interface mainProps {
 
 const Main: React.FC<mainProps> = ({ children }) => {
     return (
-        <main className=" bg-gray-100 border">
+        <div className=" bg-gray-100 border">
+             <section className="px-6 flex  mb-12 ">
+                    <div className=" hover:cursor-pointer  px-2  h-6 my-0.5 bg-gray-200   ">
+                        <i className="text-gray-600 border  scale-75  material-icons ">tune</i>
+                    </div>
+                </section> 
             {children}
-        </main>
+        </div>
     )
 }
 
@@ -64,6 +66,8 @@ const Menu: React.FC = () => {
 
     const [estiloMenu, setEstiloMenu] = useState<string>('translate-x-full opacity-0');
     const [icone, setIcone] = useState<boolean>(false);
+    const autenticado = UseAuth();
+    const router = useRouter();
 
     function abriMenu() {
         if (icone == true) {
@@ -76,25 +80,46 @@ const Menu: React.FC = () => {
 
     }
 
+    function deslogar() {
+        const usuario = autenticado.getSessaoUsuario();
+        if (usuario) {
+            autenticado.deslogar();
+            router.push("/login");
+        } else {
+            router.push("/login");
+        }
+    }
+
+
     return (
-        <div className=" flex flex-col items-end">
+        <div className=" flex flex-col items-end z-50">
             <i onClick={abriMenu} className=" material-icons hover:cursor-pointer   text-black menu">more_vert</i>
             <div className={` ${estiloMenu} max-h-screen transition-all duration-1000 bg-slate-50 m-0 border border-gray-300  mt-1.5`}>
-                <i onClick={abriMenu} className={` material-icons text-gray-700 hover:cursor-pointer ml-20 `}></i>
                 <ul className={`text-center font-serif `}>
                     <ItemLista texto="Meus livros" />
-                    <ItemLista texto="Sair" />
+                    <ItemLista onClick={deslogar} texto="Sair" />
                 </ul>
             </div>
         </div>
-
     )
 }
 
 export const Footer: React.FC = () => {
     return (
         <footer className=" py-5 border border-gray-50 mt-12 bg-gray-300">
-            <p className="text-gray-700 text-center ">Desenvolvido por Paulo Oliveiras</p>
+            <p className="text-gray-700 text-center ">Desenvolvido por Paulo Oliveira</p>
         </footer>
     )
+}
+
+interface RenderIfProps {
+    condicao?: boolean;
+    children?: React.ReactNode;
+}
+
+export const RenderIf: React.FC<RenderIfProps> = ({ children, condicao }) => {
+    if (condicao) {
+        return children
+    }
+    return false;
 }
