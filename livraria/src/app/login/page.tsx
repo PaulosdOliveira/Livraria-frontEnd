@@ -31,11 +31,9 @@ export default function Login() {
 
 
     async function onSubmit(values: formProps) {
-        console.log("Submeteu")
         if (!novoUsuario) {
             const credenciais: Credenciais = { email: values.email, senha: values.senha }
             try {
-                console.log("Submeteu")
                 const accessToken: AccessToken = await auth.logar(credenciais);
                 auth.criarSessao(accessToken);
                 auth.sessaoValida();
@@ -51,14 +49,13 @@ export default function Login() {
                 resetForm();
                 setNovoUsuario(false);
             } catch (error) {
-                console.log("Submeteu")
+                
             }
         }
 
     }
 
     function criarConta() {
-        console.log("Submeteu")
         if (novoUsuario) {
             setNovoUsuario(false);
         } else {

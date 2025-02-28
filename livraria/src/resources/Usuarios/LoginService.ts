@@ -1,4 +1,5 @@
 'use client'
+import { loadavg } from "os";
 import { Credenciais, AccessToken, TokenSessaoUsuario, Usuario } from "./Usuarios.resources"
 import jwt from 'jwt-decode'
 
@@ -82,14 +83,16 @@ class LoginService {
 
     }
 
-//Verificando se a sessão é valida
+    
+
+    //Verificando se a sessão é valida
     sessaoValida(): boolean {
-        const sessaoUssuario:  TokenSessaoUsuario | null = this.getSessaoUsuario();
-        if(!sessaoUssuario){
+        const sessaoUssuario: TokenSessaoUsuario | null = this.getSessaoUsuario();
+        if (!sessaoUssuario) {
             return false;
         }
         const expiracao: number | undefined = sessaoUssuario.expiracao;
-        if(expiracao){
+        if (expiracao) {
             const expiracaoEmMinutos = expiracao * 1000;
             return new Date() < new Date(expiracaoEmMinutos);
         }
@@ -97,11 +100,11 @@ class LoginService {
     }
 
     //Deslogar
-    deslogar(): void{
+    deslogar(): void {
         try {
             localStorage.removeItem(LoginService.LOGADO);
         } catch (error) {
-            
+
         }
     }
 

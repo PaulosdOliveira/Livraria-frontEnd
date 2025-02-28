@@ -6,12 +6,14 @@ import Login from "./login/page";
 
 export default function Home() {
 
-  const auth = UseAuth();
-  const usuario = auth.getSessaoUsuario;
-  if (!usuario) {
-    return (<Login></Login>);
+  const auth = localStorage.getItem("_login");
+
+  if (auth) {
+    return (<Biblioteca></Biblioteca>);
   }
-  return (<Biblioteca></Biblioteca>);
+  return (<Login></Login>);
+
+
 
 
 }
