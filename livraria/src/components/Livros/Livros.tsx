@@ -3,9 +3,6 @@
 import { LivroCard } from "@/components/LivroCard";
 import { useState } from "react";
 
-interface livroSection {
-    genero?: string;
-}
 
 interface PrincipalComponente {
     children?: React.ReactNode;
@@ -22,25 +19,44 @@ export const Principal: React.FC<PrincipalComponente> = ({ children }) => {
     )
 }
 
-export const test: React.FC = () => {
+interface sessaoGeneroProps {
+    genero?: "DRAMA" | "ROMANCE" | "CIENCIA" | "TERROR" | "COMEDIA" | "SUSPENSE";
+    corGenero?: string;
+    children?: React.ReactNode;
+}
 
+export const SessaoGenero: React.FC<sessaoGeneroProps> = ({ corGenero, genero, children }) => {
     return (
-        <section className="border bg-white shadow-xl shadow-gray-200 h-80 my-10 ">
-            <div className="bg-pink-600 mb-1 w-24 my-1 rounded-e-full">
-                <h1 className="text-white shadow-md shadow-gray-500">CIÊNCIA</h1>
+        <section className="border bg-white w-auto shadow-xl shadow-gray-200 h-96 my-10  ml-6">
+            <div className={`${corGenero} mb-1 w-24 my-1 rounded-e-full`} >
+                <h1 className="text-white shadow-md shadow-gray-500">{genero}</h1>
             </div>
-            <section id="prateleira" className=" flex h-64">  
-            </section>
+            <div className="flex ">
+                {children}
+            </div>
         </section>
     )
 }
 
-export const LivrosPesquisa: React.FC = () => {
+
+interface pesquisaPorps {
+    children?: React.ReactNode;
+}
+export const LivrosPesquisa: React.FC<pesquisaPorps> = ({ children }) => {
     return (
-        <section id="sessao-pesquisa" className="bg-white ">
-
-            
-
+        <section className="  items-start bg-gray-200   m-auto"
+            style={{ minHeight: '96vh', maxHeight: 'auto', width: '98%' }}
+        >
+            <div style={{ width: '85%' ,height: 'auto'}}
+             className="flex flex-wrap     m-auto ">
+                <LivroCard autor="paulo" titulo="Livro" urlFoto="https://static.wixstatic.com/media/31a549_7dffb191bffa440686e5a148b8e042d9~mv2.jpg/v1/fill/w_480,h_768,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/31a549_7dffb191bffa440686e5a148b8e042d9~mv2.jpg" />
+                <LivroCard autor="paulo" titulo="Livro" urlFoto="https://static.wixstatic.com/media/31a549_7dffb191bffa440686e5a148b8e042d9~mv2.jpg/v1/fill/w_480,h_768,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/31a549_7dffb191bffa440686e5a148b8e042d9~mv2.jpg" />
+                <LivroCard autor="paulo" titulo="Livro" urlFoto="https://static.wixstatic.com/media/31a549_7dffb191bffa440686e5a148b8e042d9~mv2.jpg/v1/fill/w_480,h_768,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/31a549_7dffb191bffa440686e5a148b8e042d9~mv2.jpg" />
+                <LivroCard autor="paulo" titulo="Livro" urlFoto="https://static.wixstatic.com/media/31a549_7dffb191bffa440686e5a148b8e042d9~mv2.jpg/v1/fill/w_480,h_768,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/31a549_7dffb191bffa440686e5a148b8e042d9~mv2.jpg" />
+                <LivroCard autor="paulo" titulo="Livro" urlFoto="https://static.wixstatic.com/media/31a549_7dffb191bffa440686e5a148b8e042d9~mv2.jpg/v1/fill/w_480,h_768,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/31a549_7dffb191bffa440686e5a148b8e042d9~mv2.jpg" />
+                <LivroCard autor="paulo" titulo="Livro" urlFoto="https://static.wixstatic.com/media/31a549_7dffb191bffa440686e5a148b8e042d9~mv2.jpg/v1/fill/w_480,h_768,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/31a549_7dffb191bffa440686e5a148b8e042d9~mv2.jpg" />
+            </div>
+            {children}
         </section>
     )
 }

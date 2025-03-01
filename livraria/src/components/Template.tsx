@@ -9,62 +9,52 @@ import { useRouter } from "next/navigation"
 
 interface templateProps {
     children?: React.ReactNode;
+    childrenHeader?: React.ReactNode;
+
 }
 
-export const Template: React.FC<templateProps> = ({ children }) => {
+export const Template: React.FC<templateProps> = ({ children, childrenHeader }) => {
+    const SELECTPADRAO = "Todos";
+    const [genero, setGenero] = useState<"DRAMA" | "ROMANCE" | "CIENCIA" | "TERROR" | "COMEDIA" | "SUSPENSE" | null>(null);
+    const [titulo, setTitulo] = useState<string>("");
+    const [visivel, setVisivel] = useState<string>("hidden");
 
+    function selecionarGenero(genero: any) {
+        genero === SELECTPADRAO ? setGenero(null) : setGenero(genero);
+    }
 
+    function abrirFiltro() {
+        visivel === "hidden" ? setVisivel("") : setVisivel("hidden");
+    
+    }
+
+    
     return (
         <>
-            <Header />
-            <Main >
-                {children}
-            </Main>
+            <header className="shadow-lg border border-gray-200 my-1 ">
+                <h1 className=" text-black hidden   font-bold text-left red">Bom dia</h1>
+                {childrenHeader}
+                <div className="  flex flex-row-reverse">
+                    <Menu />
+                </div>
+            </header>
+            {children}
             <Footer />
         </>
     )
 }
 
-const Header: React.FC = () => {
-    return (
-        <header className="shadow-lg border border-gray-200 my-1 ">
-            <h1 className="inline-block text-black border  font-bold text-left red">Bom dia</h1>
-            <div className="inputHeader m-auto ">
-                <h2 className="text-black">Pesquisar</h2>
-                <div className=" pl-0.5  rounded-e-xl rounded-s-sm flex  max-w-80 m-auto  border border-gray-300 bg-gray-200 ">
-                    <input type="text" placeholder="Pesquisar" className="h-10   size-full border  text-black  rounded-lg inputHeader" />
-                    <div className=" ml-0.5 hover:cursor-pointer rounded-e-xl  w-12 h-auto bg-black">
-                        <i className=" my-3  w-auto h-auto material-icons  text-white  scale-150">search</i>
-                    </div>
-                </div>
-            </div>
-            <div className="  flex flex-row-reverse">
-                <Menu />
-            </div>
-        </header>
-    )
-}
+
 
 interface mainProps {
     children: React.ReactNode;
 }
 
-const Main: React.FC<mainProps> = ({ children }) => {
-    return (
-        <div className=" bg-gray-100 border">
-             <section className="px-6 flex  mb-12 ">
-                    <div className=" hover:cursor-pointer  px-2  h-6 my-0.5 bg-gray-200   ">
-                        <i className="text-gray-600 border  scale-75  material-icons ">tune</i>
-                    </div>
-                </section> 
-            {children}
-        </div>
-    )
-}
+
 
 const Menu: React.FC = () => {
 
-    const [estiloMenu, setEstiloMenu] = useState<string>('translate-x-full opacity-0');
+    const [estiloMenu, setEstiloMenu] = useState<string>(' opacity-0');
     const [icone, setIcone] = useState<boolean>(false);
     const autenticado = UseAuth();
     const router = useRouter();
@@ -72,7 +62,7 @@ const Menu: React.FC = () => {
     function abriMenu() {
         if (icone == true) {
             setIcone(false);
-            setEstiloMenu("translate-x-full opacity-0")
+            setEstiloMenu(" opacity-0")
         } else {
             setIcone(true);
             setEstiloMenu("opacity-full")
@@ -93,8 +83,8 @@ const Menu: React.FC = () => {
 
     return (
         <div className=" flex flex-col items-end z-50">
-            <i onClick={abriMenu} className=" material-icons hover:cursor-pointer   text-black menu">more_vert</i>
-            <div className={` ${estiloMenu} max-h-screen transition-all duration-1000 bg-slate-50 m-0 border border-gray-300  mt-1.5`}>
+            <i onClick={abriMenu} className=" material-icons hover:cursor-pointer -my-2  text-black menu">more_vert</i>
+            <div className={` ${estiloMenu} transition-all duration-500 max-h-screen  bg-slate-50 m-0 border border-gray-300  mt-1.5`}>
                 <ul className={`text-center font-serif `}>
                     <ItemLista texto="Meus livros" />
                     <ItemLista onClick={deslogar} texto="Sair" />
@@ -106,7 +96,7 @@ const Menu: React.FC = () => {
 
 export const Footer: React.FC = () => {
     return (
-        <footer className=" py-5 border border-gray-50 mt-12 bg-gray-300">
+        <footer className=" absolute w-full  py-5 border border-gray-50  bg-gray-300 ">
             <p className="text-gray-700 text-center ">Desenvolvido por Paulo Oliveira</p>
         </footer>
     )
