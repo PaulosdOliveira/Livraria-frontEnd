@@ -1,7 +1,7 @@
 'use client'
 
 import { LivroCard } from "@/components/LivroCard";
-import { Template } from "@/components/Template"
+import { RenderIf, Template } from "@/components/Template"
 import { Livro } from "@/resources/livro/Livro.resource"
 import { LivroService } from "@/resources/livro/Livro.service";
 import { useState } from "react";
@@ -10,43 +10,64 @@ import { SessaoGenero, LivrosPesquisa } from "@/components/Livros/Livros"
 
 export default function Biblioteca() {
 
-
+    // Serviço de consulta de livros
     const livroService = LivroService();
+
+
+    //Propriedades de armazenamento de consulta  padrão
     const [ROMANCE, setROMANCE] = useState<Livro[]>([]);
     const [DRAMA, setDRAMA] = useState<Livro[]>([]);
     const [CIENCIA, setCIENCIA] = useState<Livro[]>([]);
     const [TERROR, setTERROR] = useState<Livro[]>([]);
     const [COMEDIA, setCOMEDIA] = useState<Livro[]>([]);
     const [SUSPENSE, setSUSPENSE] = useState<Livro[]>([]);
+    //** */
+
     const [bemvindo, setBemvindo] = useState<boolean>(true);
+    const [pesquisou, setPesquisou] = useState<boolean>(false);
 
 
+    //Propriedades de consulta do usuário
+    const SELECTPADRAO = "Todos";
+    const [genero, setGenero] = useState<"DRAMA" | "ROMANCE" | "CIENCIA" | "TERROR" | "COMEDIA" | "SUSPENSE" | undefined>(undefined);
+    const [titulo, setTitulo] = useState<string>("");
+
+    function selecionarGenero(genero: any) {
+        genero === SELECTPADRAO ? setGenero(undefined) : setGenero(genero);
+        console.log("Titulo: " + titulo)
+        console.log("Genero: " + genero)
+    }
+
+
+    //Método de consulta padrao
     async function buscarLivros() {
         //Consultado livros de ROMANCE
-        const listaRomance = await livroService.buscarLivroPorGenero("ROMANCE");
+        const listaRomance = await livroService.buscarLivros("ROMANCE", "");
         setROMANCE(listaRomance);
 
         //Consultado livros de CIENCIA
-        const listaCiencia = await livroService.buscarLivroPorGenero("CIENCIA");
+        const listaCiencia = await livroService.buscarLivros("CIENCIA", "");
         setCIENCIA(listaCiencia);
 
         //Consultado livros de DRAMA
-        const listaDrama = await livroService.buscarLivroPorGenero("DRAMA");
+        const listaDrama = await livroService.buscarLivros("DRAMA", "");
         setDRAMA(listaDrama);
 
         //Consultado livros de SUSPENSE
-        const listaSuspense = await livroService.buscarLivroPorGenero("SUSPENSE");
+        const listaSuspense = await livroService.buscarLivros("SUSPENSE", "");
         setSUSPENSE(listaSuspense);
 
         //Consultado livros de TERROR
-        const listaTerror = await livroService.buscarLivroPorGenero("TERROR");
+        const listaTerror = await livroService.buscarLivros("TERROR", "");
         setTERROR(listaTerror);
 
         //Consultado livros de COMEDIA
-        const listaComedia = await livroService.buscarLivroPorGenero("COMEDIA");
+        const listaComedia = await livroService.buscarLivros("COMEDIA", "");
         setCOMEDIA(listaComedia);
+        console.log("Comedia: " + SUSPENSE.length)
     }
 
+    //Transformando um objeto Livro em LivroCard
     function criarCard(livro: Livro) {
         return (
             <LivroCard key={livro.titulo} autor={livro.nomeAutor} titulo={livro.titulo}
@@ -54,6 +75,8 @@ export default function Biblioteca() {
         )
     }
 
+
+    //Renderizando livros ao carregar a pagina
     function renderizarCards() {
 
         if (bemvindo) {
@@ -71,20 +94,47 @@ export default function Biblioteca() {
                 <SessaoGenero corGenero="bg-yellow-500" genero="COMEDIA" children={COMEDIA.map(criarCard)} />
 
             </>
-
         )
+    }
 
 
+    //Método de consulta do usuário
+    async function pesquisarLivros(genero: any, titulo: string | undefined) {
+        const livros = await livroService.buscarLivros(genero, titulo);
+        //Usando a lista de livros de romance como suporte
+        setROMANCE(livros);
+        setPesquisou(true);
+    }
+
+    //Exibindo o resultado da pesquisa
+    function resultadoPesquisa() {
+        if (!ROMANCE.length) {
+            return (
+                <h1 className="text-black">Not found</h1>
+            )
+
+        }
+        return (
+            ROMANCE.map(criarCard)
+        )
+    }
+
+    function exibirResultado() {
+        pesquisarLivros(genero, titulo);
     }
 
     return (
-        <Template childrenHeader={<BarraPesquisa />}>
+        <Template childrenHeader={<BarraPesquisa pesquisar={exibirResultado} onChange={event => setTitulo(event.target.value)} />}>
             <div>
                 {
-                    //  renderizarCards()
                     <>
-                        <AreaFiltro />
-                        <LivrosPesquisa></LivrosPesquisa>
+                        <AreaFiltro selectPadrao={SELECTPADRAO} onChange={selecionarGenero} />
+                        <RenderIf condicao={!pesquisou}>
+                            {renderizarCards()}
+                        </RenderIf>
+                        <RenderIf condicao={pesquisou}>
+                            <LivrosPesquisa>{resultadoPesquisa()}</LivrosPesquisa>
+                        </RenderIf>
                     </>
 
                 }
@@ -96,26 +146,34 @@ export default function Biblioteca() {
 }
 
 
-const BarraPesquisa: React.FC = () => {
+//Renderiza a barra de pesquisa no header
+interface barraProps {
+    onChange?: (event: any) => void;
+    pesquisar: (event: any) => void;
+}
+
+const BarraPesquisa: React.FC<barraProps> = ({ onChange, pesquisar }) => {
     return (
         <div className="inputHeader m-auto ">
             <div className=" px-1   rounded-full flex  mt-3.5 max-w-72 m-auto h-8 ">
-                <input type="text" placeholder="Pesquisar" className="h-10 border border-gray-400   size-full  text-black text-center  rounded-full m-auto" />
-                <i className="hover:cursor-pointer  my-2.5 absolute translate-x-72  w-auto h-auto material-icons  text-gray-400  scale-125">search</i>
+                <input onChange={onChange} type="text" placeholder="Pesquisar" className="h-10 border border-gray-400   size-full  text-black text-center  rounded-full m-auto" />
+                <i onClick={pesquisar}
+                    className="hover:cursor-pointer  my-2.5 absolute translate-x-72  w-auto h-auto material-icons  text-gray-400  scale-125">search</i>
             </div>
         </div>
     )
 }
 
-const AreaFiltro: React.FC = () => {
-    const SELECTPADRAO = "Todos";
-    const [genero, setGenero] = useState<"DRAMA" | "ROMANCE" | "CIENCIA" | "TERROR" | "COMEDIA" | "SUSPENSE" | null>(null);
-    const [titulo, setTitulo] = useState<string>("");
-    const [visivel, setVisivel] = useState<string>("hidden");
+//Renderiza icone de filtro para selecionar o tipo de genero a ser buscado
 
-    function selecionarGenero(genero: any) {
-        genero === SELECTPADRAO ? setGenero(null) : setGenero(genero);
-    }
+interface filtroProps {
+    selectPadrao: string;
+    onChange: (event: any) => void;
+}
+
+const AreaFiltro: React.FC<filtroProps> = ({ onChange, selectPadrao }) => {
+
+    const [visivel, setVisivel] = useState<string>("hidden");
 
     function abrirFiltro() {
         visivel === "hidden" ? setVisivel("") : setVisivel("hidden");
@@ -127,8 +185,8 @@ const AreaFiltro: React.FC = () => {
                 className="  hover:cursor-pointer border   px-2  h-6 my-0.5 bg-gray-200   ">
                 <i className="text-gray-600 border  scale-75  material-icons ">tune</i>
             </div>
-            <select onChange={event => selecionarGenero(event.target.value)} className={`${visivel} my-2 text-black font-mono text-sm h-6  rounded-sm px-1`}>
-                <option >{SELECTPADRAO}</option>
+            <select onChange={event => onChange(event.target.value)} className={`${visivel} my-2 text-black font-mono text-sm h-6  rounded-sm px-1`}>
+                <option >{selectPadrao}</option>
                 <option>ROMANCE</option>
                 <option>CIENCIA</option>
                 <option>COMEDIA</option>

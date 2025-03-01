@@ -14,20 +14,6 @@ interface templateProps {
 }
 
 export const Template: React.FC<templateProps> = ({ children, childrenHeader }) => {
-    const SELECTPADRAO = "Todos";
-    const [genero, setGenero] = useState<"DRAMA" | "ROMANCE" | "CIENCIA" | "TERROR" | "COMEDIA" | "SUSPENSE" | null>(null);
-    const [titulo, setTitulo] = useState<string>("");
-    const [visivel, setVisivel] = useState<string>("hidden");
-
-    function selecionarGenero(genero: any) {
-        genero === SELECTPADRAO ? setGenero(null) : setGenero(genero);
-    }
-
-    function abrirFiltro() {
-        visivel === "hidden" ? setVisivel("") : setVisivel("hidden");
-    
-    }
-
     
     return (
         <>

@@ -5,8 +5,10 @@ import { Livro } from './Livro.resource'
 class UseLivroService {
     urlBase = "http://localhost:8080/livros";
 
-    async buscarLivroPorGenero(genero: "DRAMA" | "ROMANCE" | "CIENCIA" | "TERROR" | "COMEDIA" | "SUSPENSE") : Promise<Livro[]> {
-        const url = this.urlBase + "?genero=" + genero;
+
+    //Metodo para buscar livros por genero e/ou titulo
+    async buscarLivros(genero: "DRAMA" | "ROMANCE" | "CIENCIA" | "TERROR" | "COMEDIA" | "SUSPENSE" | undefined, titulo: string | undefined) : Promise<Livro[]> {
+        const url = this.urlBase + "?genero=" + genero + "&titulo=" + titulo;
         const usuarioLogado = UseAuth().getSessaoUsuario();
         const response = await fetch(url, {
             headers: {
@@ -16,6 +18,7 @@ class UseLivroService {
         return await response.json();
         
     }
+
 }
 
 export const LivroService = () => new UseLivroService();

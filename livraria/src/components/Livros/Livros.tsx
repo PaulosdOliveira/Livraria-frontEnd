@@ -40,23 +40,17 @@ export const SessaoGenero: React.FC<sessaoGeneroProps> = ({ corGenero, genero, c
 
 
 interface pesquisaPorps {
-    children?: React.ReactNode;
+    children: React.ReactNode;
 }
 export const LivrosPesquisa: React.FC<pesquisaPorps> = ({ children }) => {
     return (
         <section className="  items-start bg-gray-200   m-auto"
             style={{ minHeight: '96vh', maxHeight: 'auto', width: '98%' }}
         >
-            <div style={{ width: '85%' ,height: 'auto'}}
-             className="flex flex-wrap     m-auto ">
-                <LivroCard autor="paulo" titulo="Livro" urlFoto="https://static.wixstatic.com/media/31a549_7dffb191bffa440686e5a148b8e042d9~mv2.jpg/v1/fill/w_480,h_768,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/31a549_7dffb191bffa440686e5a148b8e042d9~mv2.jpg" />
-                <LivroCard autor="paulo" titulo="Livro" urlFoto="https://static.wixstatic.com/media/31a549_7dffb191bffa440686e5a148b8e042d9~mv2.jpg/v1/fill/w_480,h_768,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/31a549_7dffb191bffa440686e5a148b8e042d9~mv2.jpg" />
-                <LivroCard autor="paulo" titulo="Livro" urlFoto="https://static.wixstatic.com/media/31a549_7dffb191bffa440686e5a148b8e042d9~mv2.jpg/v1/fill/w_480,h_768,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/31a549_7dffb191bffa440686e5a148b8e042d9~mv2.jpg" />
-                <LivroCard autor="paulo" titulo="Livro" urlFoto="https://static.wixstatic.com/media/31a549_7dffb191bffa440686e5a148b8e042d9~mv2.jpg/v1/fill/w_480,h_768,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/31a549_7dffb191bffa440686e5a148b8e042d9~mv2.jpg" />
-                <LivroCard autor="paulo" titulo="Livro" urlFoto="https://static.wixstatic.com/media/31a549_7dffb191bffa440686e5a148b8e042d9~mv2.jpg/v1/fill/w_480,h_768,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/31a549_7dffb191bffa440686e5a148b8e042d9~mv2.jpg" />
-                <LivroCard autor="paulo" titulo="Livro" urlFoto="https://static.wixstatic.com/media/31a549_7dffb191bffa440686e5a148b8e042d9~mv2.jpg/v1/fill/w_480,h_768,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/31a549_7dffb191bffa440686e5a148b8e042d9~mv2.jpg" />
+            <div style={{ width: '85%', height: 'auto' }}
+                className="flex flex-wrap     m-auto ">
+                {children}
             </div>
-            {children}
         </section>
     )
 }
