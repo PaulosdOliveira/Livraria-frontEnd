@@ -5,23 +5,23 @@ import { UseAuth } from "@/resources/Usuarios/LoginService";
 import { useRouter } from "next/navigation"
 
 
-
-
 interface templateProps {
     children?: React.ReactNode;
     childrenHeader?: React.ReactNode;
-
+    livros?: boolean;
+    cadastro?: boolean;
+    admPage?: boolean;
 }
 
-export const Template: React.FC<templateProps> = ({ children, childrenHeader }) => {
-    
+export const Template: React.FC<templateProps> = ({ children, childrenHeader, cadastro, livros, admPage }) => {
+
     return (
         <>
             <header className="shadow-lg border border-gray-200 my-1 ">
-                
+
                 {childrenHeader}
                 <div className="  flex flex-row-reverse">
-                    <Menu />
+                    <Menu admPage={admPage} cadastro={cadastro} livros={livros} />
                 </div>
             </header>
             {children}
@@ -31,19 +31,21 @@ export const Template: React.FC<templateProps> = ({ children, childrenHeader }) 
 }
 
 
-
-interface mainProps {
-    children: React.ReactNode;
+interface menuProps {
+    livros?: boolean;
+    cadastro?: boolean;
+    admPage?: boolean;
 }
 
 
 
-const Menu: React.FC = () => {
+const Menu: React.FC<menuProps> = ({ cadastro, livros, admPage }) => {
 
     const [estiloMenu, setEstiloMenu] = useState<string>(' opacity-0');
     const [icone, setIcone] = useState<boolean>(false);
     const autenticado = UseAuth();
     const router = useRouter();
+    const perfil = autenticado.getSessaoUsuario()?.perfil;
 
     function abriMenu() {
         if (icone == true) {
@@ -66,13 +68,21 @@ const Menu: React.FC = () => {
         }
     }
 
-
     return (
         <div className=" flex flex-col items-end z-50">
             <i onClick={abriMenu} className=" material-icons hover:cursor-pointer -my-2  text-black menu">more_vert</i>
             <div className={` ${estiloMenu} transition-all duration-500 max-h-screen  bg-slate-50 m-0 border border-gray-300  mt-1.5`}>
                 <ul className={`text-center font-serif `}>
-                    <ItemLista texto="Meus livros" />
+                    <RenderIf condicao={perfil !== "ADMNISTRADOR" && livros}>
+                        <ItemLista texto="Meus livros" />
+                    </RenderIf>
+                    <RenderIf condicao={perfil === "ADMNISTRADOR" && cadastro}>
+                        <ItemLista onClick={() => router.push("/unidadeADM")} texto="Cadastro" />
+                    </RenderIf>
+                    <RenderIf condicao={admPage}>
+                        <ItemLista texto="Livros" />
+                        <ItemLista texto="Autores" />
+                    </RenderIf>
                     <ItemLista onClick={deslogar} texto="Sair" />
                 </ul>
             </div>

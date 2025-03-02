@@ -72,7 +72,6 @@ class LoginService {
 
     // Colentando cookie do navegador
     getSessaoUsuario(): TokenSessaoUsuario | null {
-        try {
             const authString = localStorage.getItem(LoginService.LOGADO);
             if (!authString) {
                 return null;
@@ -81,14 +80,12 @@ class LoginService {
             const token: TokenSessaoUsuario = JSON.parse(authString);
             return token;
 
-        } catch (error) {
-            return null;
-        }
-
     }
 
     //Verificando se a sessão é valida
     sessaoValida(): boolean {
+
+
         const sessaoUssuario: TokenSessaoUsuario | null = this.getSessaoUsuario();
         if (!sessaoUssuario) {
             return false;
@@ -96,7 +93,7 @@ class LoginService {
         const expiracao: number | undefined = sessaoUssuario.expiracao;
         if (expiracao) {
             const expiracaoEmMinutos = expiracao * 1000;
-            return new Date() < new Date(expiracaoEmMinutos);
+            return new Date() < new Date(expiracaoEmMinutos) ;
         }
         return true;
     }

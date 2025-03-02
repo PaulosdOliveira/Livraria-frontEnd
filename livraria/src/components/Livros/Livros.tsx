@@ -41,8 +41,9 @@ export const SessaoGenero: React.FC<sessaoGeneroProps> = ({ corGenero, genero, c
 
 interface pesquisaPorps {
     children: React.ReactNode;
+    voltar?: (event: any) => void
 }
-export const LivrosPesquisa: React.FC<pesquisaPorps> = ({ children }) => {
+export const LivrosPesquisa: React.FC<pesquisaPorps> = ({ children, voltar }) => {
     return (
         <section className="  items-start bg-gray-200   m-auto"
             style={{ minHeight: '96vh', maxHeight: 'auto', width: '98%' }}
@@ -50,6 +51,7 @@ export const LivrosPesquisa: React.FC<pesquisaPorps> = ({ children }) => {
             <div style={{ width: '85%', height: 'auto' }}
                 className="flex flex-wrap     m-auto ">
                 {children}
+                <div onClick={voltar}  className="text-white text-center pt-1 material-icons bg-black z-50 absolute -translate-x-12 mt-1 rounded-full h-8 w-8 hover:cursor-pointer hover:-translate-y-0.5  transition duration-700">home</div>
             </div>
         </section>
     )

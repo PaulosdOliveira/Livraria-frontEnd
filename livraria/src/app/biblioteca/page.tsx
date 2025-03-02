@@ -21,6 +21,7 @@ export default function Biblioteca() {
     const [TERROR, setTERROR] = useState<Livro[]>([]);
     const [COMEDIA, setCOMEDIA] = useState<Livro[]>([]);
     const [SUSPENSE, setSUSPENSE] = useState<Livro[]>([]);
+    const [pesquisa,setPesquisa] = useState<Livro[]>([]);
     //** */
 
     const [bemvindo, setBemvindo] = useState<boolean>(true);
@@ -99,20 +100,20 @@ export default function Biblioteca() {
     async function pesquisarLivros(genero: any, titulo: string | undefined) {
         const livros = await livroService.buscarLivros(genero, titulo);
         //Usando a lista de livros de romance como suporte
-        setROMANCE(livros);
+        setPesquisa(livros);
         setPesquisou(true);
     }
 
     //Exibindo o resultado da pesquisa
     function resultadoPesquisa() {
-        if (!ROMANCE.length) {
+        if (!pesquisa.length) {
             return (
                 <h1 className="text-black">Not found</h1>
             )
 
         }
         return (
-            ROMANCE.map(criarCard)
+            pesquisa.map(criarCard)
         )
     }
 
@@ -127,7 +128,7 @@ export default function Biblioteca() {
     }
 
     return (
-        <Template childrenHeader={<BarraPesquisa pesquisar={exibirResultado} onChange={event => setTitulo(event.target.value)} />}>
+        <Template cadastro={true} livros={true}  childrenHeader={<BarraPesquisa pesquisar={exibirResultado} onChange={event => setTitulo(event.target.value)} />}>
             <div>
                 {
                     <>
@@ -136,7 +137,7 @@ export default function Biblioteca() {
                             {renderizarCards()}
                         </RenderIf>
                         <RenderIf condicao={pesquisou}>
-                            <LivrosPesquisa>{resultadoPesquisa()}</LivrosPesquisa>
+                            <LivrosPesquisa voltar={ (event) => setPesquisou(false)}>{resultadoPesquisa()}</LivrosPesquisa>
                         </RenderIf>
                     </>
 
