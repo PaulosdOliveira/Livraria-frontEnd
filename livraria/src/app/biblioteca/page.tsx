@@ -32,10 +32,9 @@ export default function Biblioteca() {
     const [genero, setGenero] = useState<"DRAMA" | "ROMANCE" | "CIENCIA" | "TERROR" | "COMEDIA" | "SUSPENSE" | undefined>(undefined);
     const [titulo, setTitulo] = useState<string>("");
 
-    function selecionarGenero(genero: any) {
-        genero === SELECTPADRAO ? setGenero(undefined) : setGenero(genero);
-        console.log("Titulo: " + titulo)
-        console.log("Genero: " + genero)
+    function selecionarGenero(generoSelecionado: any) {
+        setGenero(generoSelecionado);
+        exibirGeneroSelecionado(generoSelecionado);
     }
 
 
@@ -64,14 +63,13 @@ export default function Biblioteca() {
         //Consultado livros de COMEDIA
         const listaComedia = await livroService.buscarLivros("COMEDIA", "");
         setCOMEDIA(listaComedia);
-        console.log("Comedia: " + SUSPENSE.length)
     }
 
     //Transformando um objeto Livro em LivroCard
     function criarCard(livro: Livro) {
         return (
             <LivroCard key={livro.titulo} autor={livro.nomeAutor} titulo={livro.titulo}
-                urlFoto={livro.urlImagem} />
+                urlFoto={livro.urlImagem} preco={livro.preco} />
         )
     }
 
@@ -92,7 +90,6 @@ export default function Biblioteca() {
                 <SessaoGenero corGenero="bg-black" genero="TERROR" children={TERROR.map(criarCard)} />
                 <SessaoGenero corGenero="bg-gray-800" genero="SUSPENSE" children={SUSPENSE.map(criarCard)} />
                 <SessaoGenero corGenero="bg-yellow-500" genero="COMEDIA" children={COMEDIA.map(criarCard)} />
-
             </>
         )
     }
@@ -119,8 +116,14 @@ export default function Biblioteca() {
         )
     }
 
+    //Pesquisando  ao clicar na lupa
     function exibirResultado() {
         pesquisarLivros(genero, titulo);
+    }
+
+    //Pesquisar ao selecionar genero
+    function exibirGeneroSelecionado(generoSelecionado: string) {
+        pesquisarLivros(generoSelecionado, titulo);
     }
 
     return (

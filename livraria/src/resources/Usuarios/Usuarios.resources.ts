@@ -1,23 +1,29 @@
-export class Usuario{
+export class Usuario {
     nome?: string;
     email?: string;
     senha?: string;
 }
 
-export class Credenciais{
+export class Credenciais {
     email?: string;
     senha?: string;
 }
 
-export class AccessToken{
+export class Cadastro {
+    nome?: string;
+    email?: string;
+    senha?: string;
+}
+
+export class AccessToken {
     accessToken?: string;
 }
 
-export class TokenSessaoUsuario{
+export class TokenSessaoUsuario {
     nome?: string;
     email?: string;
     accessToken?: string;
     expiracao?: number;
-    perfil?: "USUARIO" | "ADMNISTRADOR"  
+    perfil?: "USUARIO" | "ADMNISTRADOR"
 }
 

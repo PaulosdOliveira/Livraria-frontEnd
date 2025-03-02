@@ -18,7 +18,7 @@ export const Template: React.FC<templateProps> = ({ children, childrenHeader }) 
     return (
         <>
             <header className="shadow-lg border border-gray-200 my-1 ">
-                <h1 className=" text-black hidden   font-bold text-left red">Bom dia</h1>
+                
                 {childrenHeader}
                 <div className="  flex flex-row-reverse">
                     <Menu />

@@ -6,7 +6,7 @@ import Login from "./login/page";
 
 export default function Home() {
 
-  const auth = localStorage.getItem("_login");
+  const auth =  localStorage.getItem("_login");
 
   if (auth) {
     return (<Biblioteca></Biblioteca>);

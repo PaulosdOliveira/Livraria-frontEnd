@@ -86,7 +86,7 @@ body {
   .cardLivro {
     padding-top: 10px;
     box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.100);
-    background-color: transparent;
+    background-color: white;
     position: relative;
     z-index: 1;
     font-size: .8em;
