@@ -6,6 +6,7 @@ import { Template } from "@/components/Template";
 import { UseAuth } from "@/resources/Usuarios/LoginService"
 import { useFormik } from "formik";
 import ErrorPage from "next/error"
+import {notificacao} from "@/components/notificacao/index"
 import { useState } from "react";
 import { cadastroLivro, valoresIniciais } from "./EsquemaFormLivro"
 import { AutorService } from "@/resources/autor/AutorService"
@@ -38,6 +39,7 @@ export default function UnidadeADM() {
 
 const PaginaADM: React.FC = () => {
 
+    const notificador = notificacao();
     const [bemVindo, setBemvindo] = useState<boolean>(true);
     const [optionAutor, setOptionAUtor] = useState<AutorOption[]>([]);
     const [urlimagem, setUrlimagem] = useState<string>("")
@@ -85,7 +87,8 @@ const PaginaADM: React.FC = () => {
     }
 
     //Enviando formul
-    function submit(dados: cadastroLivro) {        const dadosEnviados = new FormData();
+    function submit(dados: cadastroLivro) {
+        const dadosEnviados = new FormData();
         dadosEnviados.append("titulo", dados.titulo);
         dadosEnviados.append("descricao", dados.descricao);
         dadosEnviados.append("genero", dados.generoLivro);
@@ -94,9 +97,13 @@ const PaginaADM: React.FC = () => {
         dadosEnviados.append("ISBN", dados.ISBN);
         dadosEnviados.append("preco", dados.preco);
         dadosEnviados.append("idString", JSON.stringify(dados.idAutor));
-        LivroService().salvarLivro(dadosEnviados);
-        resetForm
-        setUrlimagem("");
+        const criado = LivroService().salvarLivro(dadosEnviados);
+        if (!!criado) {
+            notificador.notificar("Livro salvo", "success");
+            resetForm
+            setUrlimagem("");
+        }
+
     }
 
 
