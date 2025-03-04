@@ -11,4 +11,4 @@ export interface cadastroLivro{
     idAutor: UUID | undefined;
 }
 
-export const valoresIniciais: cadastroLivro = { generoLivro: "", ISBN: "", preco: "", titulo: "", descricao: "", arquivo: "", idAutor: undefined  }
+export const valoresIniciais: cadastroLivro = { generoLivro: "ROMANCE", ISBN: "", preco: "", titulo: "", descricao: "", arquivo: "", idAutor: undefined }

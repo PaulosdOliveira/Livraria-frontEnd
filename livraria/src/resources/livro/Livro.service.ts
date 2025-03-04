@@ -19,6 +19,19 @@ class UseLivroService {
         
     }
 
+    //Salvar novo livro
+    async salvarLivro(dados: FormData): Promise<void>{
+        const url = this.urlBase;
+        const usuarioLogado = UseAuth().getSessaoUsuario();
+        const resposta = await fetch(url,{
+            method: "POST",
+            body: dados,
+            headers: {
+               "Authorization": `Bearer ${usuarioLogado?.accessToken}`
+            }
+        }) 
+    }
+
 }
 
 export const LivroService = () => new UseLivroService();

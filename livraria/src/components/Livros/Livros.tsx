@@ -27,7 +27,7 @@ interface sessaoGeneroProps {
 
 export const SessaoGenero: React.FC<sessaoGeneroProps> = ({ corGenero, genero, children }) => {
     return (
-        <section className="border bg-white w-auto shadow-xl shadow-gray-200 h-96 my-10  ml-6">
+        <section className="border bg-white w-auto shadow-xl shadow-gray-200 h-96 my-10  ml-6 overflow-auto">
             <div className={`${corGenero} mb-1 w-24 my-1 rounded-e-full`} >
                 <h1 className="text-white shadow-md shadow-gray-500">{genero}</h1>
             </div>

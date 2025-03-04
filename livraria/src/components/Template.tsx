@@ -1,5 +1,6 @@
 
 import { useState } from "react"
+import { ToastContainer} from "react-toastify"
 import { ItemLista } from "@/components/ItemLista/ItemLista";
 import { UseAuth } from "@/resources/Usuarios/LoginService";
 import { useRouter } from "next/navigation"
@@ -26,6 +27,13 @@ export const Template: React.FC<templateProps> = ({ children, childrenHeader, ca
             </header>
             {children}
             <Footer />
+            <ToastContainer position="top-center"
+            autoClose={6000}
+            hideProgressBar={false}
+            draggable={false}
+            closeOnClick={true}
+            pauseOnHover={true}
+            />
         </>
     )
 }

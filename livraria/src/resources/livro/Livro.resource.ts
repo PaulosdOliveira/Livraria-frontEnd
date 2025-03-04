@@ -1,3 +1,5 @@
+import { UUID } from "crypto"
+
 export class Livro {
     titulo?: string
     descricao?: string
