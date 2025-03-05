@@ -2,6 +2,12 @@ import { UseAuth } from '../Usuarios/LoginService';
 import { Livro } from './Livro.resource'
 
 
+
+interface Resultado {
+    status?: number;
+    erro?: string;
+}
+
 class UseLivroService {
     urlBase = "http://localhost:8080/livros";
 
@@ -30,10 +36,14 @@ class UseLivroService {
                 "Authorization": `Bearer ${usuarioLogado?.accessToken}`
             }
         })
-        if (resposta.status === 201) {
-            return true;
+        const status = resposta.status;
+        const resultado: Resultado = { status: status };
+        if (status === 409) {
+            const erroMensagem = await resposta.json();
+            resultado.erro = erroMensagem.erro;
         }
-        return false;
+        return resultado;
+
     }
 
 }

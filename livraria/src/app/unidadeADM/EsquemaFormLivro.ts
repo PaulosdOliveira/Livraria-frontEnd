@@ -5,7 +5,7 @@ export interface cadastroLivro{
     descricao: string;
     ISBN: string;
     preco: string;
-    dataPublicacao?: Date;
+    dataPublicacao?: Date ;
     generoLivro: string;
     arquivo: string | Blob;
     idAutor: UUID | undefined;

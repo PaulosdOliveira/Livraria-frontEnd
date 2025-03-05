@@ -6,7 +6,7 @@ import { Template } from "@/components/Template";
 import { UseAuth } from "@/resources/Usuarios/LoginService"
 import { useFormik } from "formik";
 import ErrorPage from "next/error"
-import {notificacao} from "@/components/notificacao/index"
+import { notificacao } from "@/components/notificacao/index"
 import { useState } from "react";
 import { cadastroLivro, valoresIniciais } from "./EsquemaFormLivro"
 import { AutorService } from "@/resources/autor/AutorService"
@@ -43,6 +43,7 @@ const PaginaADM: React.FC = () => {
     const [bemVindo, setBemvindo] = useState<boolean>(true);
     const [optionAutor, setOptionAUtor] = useState<AutorOption[]>([]);
     const [urlimagem, setUrlimagem] = useState<string>("")
+    const livroService = LivroService();
 
     const { errors, values, handleChange, handleSubmit, resetForm } = useFormik<cadastroLivro>({
         initialValues: valoresIniciais,
@@ -87,7 +88,7 @@ const PaginaADM: React.FC = () => {
     }
 
     //Enviando formul
-    function submit(dados: cadastroLivro) {
+    async function submit(dados: cadastroLivro) {
         const dadosEnviados = new FormData();
         dadosEnviados.append("titulo", dados.titulo);
         dadosEnviados.append("descricao", dados.descricao);
@@ -97,13 +98,18 @@ const PaginaADM: React.FC = () => {
         dadosEnviados.append("ISBN", dados.ISBN);
         dadosEnviados.append("preco", dados.preco);
         dadosEnviados.append("idString", JSON.stringify(dados.idAutor));
-        const criado = LivroService().salvarLivro(dadosEnviados);
-        if (!!criado) {
-            notificador.notificar("Livro salvo", "success");
-            resetForm
-            setUrlimagem("");
-        }
 
+
+        livroService.salvarLivro(dadosEnviados).then((resposta) => {
+            if (resposta.status === 409) {
+                notificador.notificar(resposta.erro + "", "warning");
+            } else {
+                notificador.notificar("Livro salvo", "success");
+                resetForm();
+                setUrlimagem("");
+                dadosEnviados.append("arquivo", "");
+            }
+        });
     }
 
 
@@ -118,9 +124,9 @@ const PaginaADM: React.FC = () => {
                         className=" border border-gray-400 rounded-sm mx-10  h-auto mr-4 ">
                         <form onSubmit={handleSubmit} className="">
                             <Caixa>
-                                <Input onChange={handleChange} id="titulo" placeholder="Titulo" estilo="livroForm"></Input>
-                                <Input onChange={handleChange} id="ISBN" placeholder="ISBN" estilo="livroForm"></Input>
-                                <Input onChange={handleChange} id="preco" placeholder="Preço" estilo="livroForm"></Input>
+                                <Input onChange={handleChange} value={values.titulo} id="titulo" placeholder="Titulo" estilo="livroForm"></Input>
+                                <Input onChange={handleChange} value={values.ISBN} id="ISBN" placeholder="ISBN" estilo="livroForm"></Input>
+                                <Input onChange={handleChange} value={values.preco} id="preco" placeholder="Preço" estilo="livroForm"></Input>
                                 <Input onChange={handleChange} id="dataPublicacao" type="date" placeholder="Preço" estilo="livroForm"></Input>
                                 <Select onChange={(event) => values.generoLivro = event.target.value}  >
                                     <option>ROMANCE</option>
@@ -134,7 +140,7 @@ const PaginaADM: React.FC = () => {
                                     {renderizarOptonsAutores()}
                                 </Select>
                             </Caixa>
-                            <textarea id="descricao" onChange={handleChange} placeholder="Descrição do livro" className="border border-gray-600 ml-1 mt-2 h-32 w-72 " />
+                            <textarea value={values.descricao} id="descricao" onChange={handleChange} placeholder="Descrição do livro" className="border border-gray-600 ml-1 mt-2 h-32 w-72 " />
                             <label className="cursor-pointer absolute translate-x-4 translate-y-5">
                                 <div className="border border-purple-700 w-44  h-10 rounded-lg text-center pt-2">
                                     Selecione Uma foto
