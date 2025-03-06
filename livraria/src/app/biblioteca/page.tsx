@@ -128,7 +128,7 @@ export default function Biblioteca() {
 
     return (
         <Template cadastro={true} livros={true}  childrenHeader={<BarraPesquisa pesquisar={exibirResultado} onChange={event => setTitulo(event.target.value)} />}>
-            <div>
+            <div className="bg-gray-50">
                 {
                     <>
                         <AreaFiltro onChange={selecionarGenero} />
@@ -136,7 +136,7 @@ export default function Biblioteca() {
                             {renderizarCards()}
                         </RenderIf>
                         <RenderIf condicao={pesquisou}>
-                            <LivrosPesquisa voltar={ (event) => setPesquisou(false)}>{resultadoPesquisa()}</LivrosPesquisa>
+                            <LivrosPesquisa voltar={ () => setPesquisou(false)}>{resultadoPesquisa()}</LivrosPesquisa>
                         </RenderIf>
                     </>
 

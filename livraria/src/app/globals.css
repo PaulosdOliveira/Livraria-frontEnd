@@ -74,8 +74,8 @@ body {
 }
 
 
+/*   Mídia principal    */
 @media all {
-
 
   #itemMenu:hover {
     transform: translate(-2%, -3%);
@@ -84,8 +84,13 @@ body {
   }
 
   .cardLivro {
-    padding-top: 10px;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    height: 300px;
+
     box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.100);
+    transition: .3s;
     background-color: white;
     position: relative;
     z-index: 1;
@@ -96,6 +101,11 @@ body {
     z-index: 2;
     cursor: pointer;
     transform: translate(0, -6px);
+  }
+
+  .fotoLivro {
+    min-width: 50px;
+    background-size: cover;
   }
 
 
@@ -125,10 +135,10 @@ body {
   }
 
   .livroForm {
-    border: 1px solid rgba(0,0,0,0.200);
+    border: 1px solid rgba(0, 0, 0, 0.200);
     margin-top: 5px;
     height: 40px;
-   
+
     border-radius: 1px;
     margin-right: 5px;
     padding-left: 10px;
@@ -140,10 +150,28 @@ body {
 
 
 
-@media screen and (min-width: 700px) and (max-width: 1600px) {
+@media screen and (min-width: 500px) and (max-width: 1600px) {
+
+  html {
+    background-color: black;
+  }
+
+  #sessaoGenero {
+    margin-left: 6px;
+    padding-left: 10px;
+  }
+
 
   .cardLivro {
-    width: 193px;
+    min-height: 368px;
+    max-height: 568px;
+    min-width: 230px;
+    margin-right: 46px;
+  }
+
+  .fotoLivro {
+    height: 290px;
+    min-width: 190px;
   }
 
   .test {
@@ -154,19 +182,31 @@ body {
 
 /*Fim das telas grandes */
 
-@media screen and (max-width: 700px) {
+@media screen and (max-width: 500px) {
+
+  html {
+    background-color: blue;
+  }
+
+  #sessaoGenero {
+    padding-left: 3px;
+  }
+  
 
   .cardLivro {
-    width: 160px;
+    height: 230px;
+    margin-right: 20px;
+    min-width: 150px;
+  }
 
+  .fotoLivro {
+    min-width: 129px;
+    min-height: 150px;
+    background-size: cover;
   }
 
 
 
-  div#capaLivro {
-    width: 120px;
-    height: 160px;
-  }
 
 
   .test {
