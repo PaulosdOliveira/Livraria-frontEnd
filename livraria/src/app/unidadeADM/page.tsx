@@ -8,12 +8,14 @@ import { useFormik } from "formik";
 import ErrorPage from "next/error"
 import { notificacao } from "@/components/notificacao/index"
 import { useState } from "react";
-import { cadastroLivro, valoresIniciais } from "./EsquemaFormLivro"
+import { cadastroLivro, valoresIniciais, validarDados } from "./EsquemaFormLivro"
 import { AutorService } from "@/resources/autor/AutorService"
 import { AutorOption } from "@/resources/autor/AutorResource"
 import { UUID } from "crypto";
 import { Button } from "@/components/Button/Button";
 import { LivroService } from "@/resources/livro/Livro.service";
+import { ErroCampo } from "@/components/InputText/Erro";
+import { OptionGenero } from "@/components/OptionGenero";
 
 
 export default function UnidadeADM() {
@@ -42,14 +44,13 @@ const PaginaADM: React.FC = () => {
     const notificador = notificacao();
     const [bemVindo, setBemvindo] = useState<boolean>(true);
     const [optionAutor, setOptionAUtor] = useState<AutorOption[]>([]);
-    const [urlimagem, setUrlimagem] = useState<string>("")
+    const [urlimagem, setUrlimagem] = useState<string>()
     const livroService = LivroService();
 
     const { errors, values, handleChange, handleSubmit, resetForm } = useFormik<cadastroLivro>({
         initialValues: valoresIniciais,
         onSubmit: submit,
-
-
+        validationSchema: validarDados
     })
 
     function selecionarImagem(event: React.ChangeEvent<HTMLInputElement>) {
@@ -87,7 +88,15 @@ const PaginaADM: React.FC = () => {
         );
     }
 
-    //Enviando formul
+    // Limpar formulário
+    function limparForm() {
+        values.ISBN = "";
+        values.preco = "";
+        values.descricao = "";
+        values.titulo = "";
+    }
+
+    //Enviando formulário
     async function submit(dados: cadastroLivro) {
         const dadosEnviados = new FormData();
         dadosEnviados.append("titulo", dados.titulo);
@@ -96,23 +105,21 @@ const PaginaADM: React.FC = () => {
         dadosEnviados.append("dataString", JSON.stringify(dados.dataPublicacao));
         dadosEnviados.append("arquivo", dados.arquivo);
         dadosEnviados.append("ISBN", dados.ISBN);
-        dadosEnviados.append("preco", dados.preco);
+        dadosEnviados.append("preco", dados.preco.replace(",", "."));
         dadosEnviados.append("idString", JSON.stringify(dados.idAutor));
 
-
+        // Enviando a requisção e tratando os diferentes resultados
         livroService.salvarLivro(dadosEnviados).then((resposta) => {
             if (resposta.status === 409) {
                 notificador.notificar(resposta.erro + "", "warning");
             } else {
                 notificador.notificar("Livro salvo", "success");
-                resetForm();
+                limparForm();
                 setUrlimagem("");
                 dadosEnviados.append("arquivo", "");
             }
         });
     }
-
-
 
     return (
         <Template admPage={true}
@@ -126,17 +133,13 @@ const PaginaADM: React.FC = () => {
                             <Caixa>
                                 <Input onChange={handleChange} value={values.titulo} id="titulo" placeholder="Titulo" estilo="livroForm"></Input>
                                 <Input onChange={handleChange} value={values.ISBN} id="ISBN" placeholder="ISBN" estilo="livroForm"></Input>
-                                <Input onChange={handleChange} value={values.preco} id="preco" placeholder="Preço" estilo="livroForm"></Input>
-                                <Input onChange={handleChange} id="dataPublicacao" type="date" placeholder="Preço" estilo="livroForm"></Input>
+                                <input onChange={handleChange} value={values.preco} id="preco" placeholder="Preço" className="livroForm" />
+                                <Input onChange={handleChange} id="dataPublicacao" type="date" placeholder="Preço" estilo="livroForm" />
                                 <Select onChange={(event) => values.generoLivro = event.target.value}  >
-                                    <option>ROMANCE</option>
-                                    <option>CIENCIA</option>
-                                    <option>COMEDIA</option>
-                                    <option>TERROR</option>
-                                    <option>SUSPENSE</option>
-                                    <option>DRAMA</option>
+                                    <OptionGenero />
                                 </Select>
-                                <Select id="opcoes">
+                                <Select id="opcoes" >
+                                    <option>Autor</option>
                                     {renderizarOptonsAutores()}
                                 </Select>
                             </Caixa>

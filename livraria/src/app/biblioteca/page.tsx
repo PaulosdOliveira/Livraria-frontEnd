@@ -29,13 +29,12 @@ export default function Biblioteca() {
 
 
     //Propriedades de consulta do usuário
-    const SELECTPADRAO = "Todos";
     const [genero, setGenero] = useState<"DRAMA" | "ROMANCE" | "CIENCIA" | "TERROR" | "COMEDIA" | "SUSPENSE" | undefined>(undefined);
     const [titulo, setTitulo] = useState<string>("");
 
     function selecionarGenero(generoSelecionado: any) {
         setGenero(generoSelecionado);
-        exibirGeneroSelecionado(generoSelecionado);
+        pesquisarGenero(generoSelecionado);
     }
 
 
@@ -122,8 +121,8 @@ export default function Biblioteca() {
         pesquisarLivros(genero, titulo);
     }
 
-    //Pesquisar ao selecionar genero
-    function exibirGeneroSelecionado(generoSelecionado: string) {
+    //Pesquisar ao selecionar um genero
+    function pesquisarGenero(generoSelecionado: string) {
         pesquisarLivros(generoSelecionado, titulo);
     }
 
@@ -132,7 +131,7 @@ export default function Biblioteca() {
             <div>
                 {
                     <>
-                        <AreaFiltro selectPadrao={SELECTPADRAO} onChange={selecionarGenero} />
+                        <AreaFiltro onChange={selecionarGenero} />
                         <RenderIf condicao={!pesquisou}>
                             {renderizarCards()}
                         </RenderIf>
@@ -171,11 +170,10 @@ const BarraPesquisa: React.FC<barraProps> = ({ onChange, pesquisar }) => {
 //Renderiza icone de filtro para selecionar o tipo de genero a ser buscado
 
 interface filtroProps {
-    selectPadrao: string;
     onChange: (event: any) => void;
 }
 
-const AreaFiltro: React.FC<filtroProps> = ({ onChange, selectPadrao }) => {
+const AreaFiltro: React.FC<filtroProps> = ({ onChange }) => {
 
     const [visivel, setVisivel] = useState<string>("hidden");
 
@@ -190,7 +188,7 @@ const AreaFiltro: React.FC<filtroProps> = ({ onChange, selectPadrao }) => {
                 <i className="text-gray-600 border  scale-75  material-icons ">tune</i>
             </div>
             <select onChange={event => onChange(event.target.value)} className={`${visivel} my-2 text-black font-mono text-sm h-6  rounded-sm px-1`}>
-                <option >{selectPadrao}</option>
+                <option >Todos</option>
                 <option>ROMANCE</option>
                 <option>CIENCIA</option>
                 <option>COMEDIA</option>

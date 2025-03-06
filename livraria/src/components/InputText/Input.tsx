@@ -11,7 +11,7 @@ interface inputProps{
 
 export const Input: React.FC<inputProps> = ({ onChange,value , id, estilo, placeholder, type = "text"}) =>{
     return(
-        <input value={value} id={id} type={type} placeholder={placeholder}
+        <input  value={value} id={id} type={type} placeholder={placeholder}
          className={`${estilo} `} onChange={onChange}/>
     )
 }
