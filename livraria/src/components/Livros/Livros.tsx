@@ -1,8 +1,5 @@
 'use client'
 
-import { LivroCard } from "@/components/LivroCard";
-import { useState } from "react";
-
 
 interface PrincipalComponente {
     children?: React.ReactNode;
@@ -28,10 +25,10 @@ interface sessaoGeneroProps {
 export const SessaoGenero: React.FC<sessaoGeneroProps> = ({ corGenero, genero, children }) => {
     return (
         <>
-            <div className={`${corGenero} mb-1 w-24 absolute  translate-y-16 translate-x-4  rounded-e-full`} >
+            <div className={`${corGenero} mb-1 w-24 absolute  translate-y-16 translate-x-4  rounded-e-full  `} >
                 <h1 className="text-white  rounded-e-full shadow-md shadow-gray-500">{genero}</h1>
             </div>
-            <section id="sessaoGenero" className=" bg-gray-50 w-auto  shadow-gray-200 min-h-72 py-4  mt-24   overflow-auto">
+            <section id="sessaoGenero" className="  w-auto  shadow-gray-200 min-h-72 py-4  mt-24   overflow-auto">
                 <div className="flex items-start">
                     {children}
                 </div>
@@ -47,7 +44,7 @@ interface pesquisaPorps {
 }
 export const LivrosPesquisa: React.FC<pesquisaPorps> = ({ children, voltar }) => {
     return (
-        <section className=" flex items-center    "
+        <section className=" flex items-center"
             style={{ minHeight: '96vh', maxHeight: 'auto', width: 'auto' }}
         >
             <div id="gridPesquisa" style={{ width: 'auto', height: 'auto' }}

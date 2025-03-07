@@ -11,7 +11,7 @@ export const LivroCard: React.FC<cardProps> = ({ autor, titulo, urlFoto, preco }
 
     return (
         <>
-            <div key={titulo} className={`cardLivro rounded-tl-lg rounded-tr-lg shadow-lg shadow-gray-300 pb-4 my-6 text-black `}>
+            <div key={titulo} className={`cardLivro rounded-tl-sm rounded-tr-sm shadow-sm shadow-gray-300 pb-4 my-6 text-black pt-1 `}>
                 <div className="fotoLivro  mb-3" style={{ backgroundImage: `url(${urlFoto})` }} />
                 <h2 className=" font-bold font-sans pl-3  w-full   mt-1">{titulo}</h2>
                 <h4 className="w-full  font-sans pl-3  text-gray-700">{autor}</h4>
