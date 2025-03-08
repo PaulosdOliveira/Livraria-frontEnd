@@ -128,7 +128,6 @@ export default function Biblioteca() {
 
     return (
         <Template cadastro={true} livros={true}  childrenHeader={<BarraPesquisa pesquisar={exibirResultado} onChange={event => setTitulo(event.target.value)} />}>
-            <div className="bg-transparent">
                 {
                     <>
                         <AreaFiltro onChange={selecionarGenero} />
@@ -141,8 +140,6 @@ export default function Biblioteca() {
                     </>
 
                 }
-            </div>
-
         </Template>
 
     )
@@ -184,8 +181,8 @@ const AreaFiltro: React.FC<filtroProps> = ({ onChange }) => {
     return (
         <section className="px-6 flex flex-col items-start  ">
             <div onClick={abrirFiltro}
-                className="  hover:cursor-pointer border   px-2  h-6 my-0.5 bg-gray-200   ">
-                <i className="text-gray-600 border  scale-75  material-icons ">tune</i>
+                className="  hover:cursor-pointer    px-2  h-6 my-0.5 bg-gray-700   ">
+                <i className="text-white   scale-75  material-icons ">tune</i>
             </div>
             <select onChange={event => onChange(event.target.value)} className={`${visivel} my-2 text-black font-mono text-sm h-6  rounded-sm px-1`}>
                 <option >Todos</option>

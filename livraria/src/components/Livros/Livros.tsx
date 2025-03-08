@@ -14,7 +14,8 @@ export const SessaoGenero: React.FC<sessaoGeneroProps> = ({ corGenero, genero, c
             <div className={`${corGenero} mb-1 w-24 absolute  translate-y-16 translate-x-4  rounded-e-full  `} >
                 <h1 className="text-white  rounded-e-full shadow-md shadow-gray-500">{genero}</h1>
             </div>
-            <section id="sessaoGenero" className="  w-auto  shadow-gray-200 min-h-72 py-4  mt-24   overflow-auto">
+            <section style={{ backgroundSize: 'contain' ,backgroundImage: 'url(https://img.pikbest.com/wp/202343/crumpled-paper-texture-of-black-with-artistic-folds-on-a-dark-wallpaper-background_9980848.jpg!w700wp)'}}
+              id="sessaoGenero" className="  w-auto   shadow-gray-200 min-h-72 py-4  mt-24   overflow-auto">
                 <div className="flex items-start">
                     {children}
                 </div>

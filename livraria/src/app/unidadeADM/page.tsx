@@ -28,9 +28,7 @@ export default function UnidadeADM() {
     if (perfil === "ADMNISTRADOR") {
         return (
             <>
-                <Template admPage={true} mudarCastro={paginaCadastro} 
-                    childrenHeader={<h1  style={{fontFamily: 'logo'}}
-                    className="text-black font-normal text-4xl">Livraria</h1>}>
+                <Template admPage={true} mudarCastro={paginaCadastro} >
                     {children}
                 </Template>
             </>

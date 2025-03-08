@@ -19,18 +19,18 @@ export const Template: React.FC<templateProps> = ({ children, childrenHeader, ca
 
     return (
         <>
-            <header className="shadow-lg border border-gray-200  ">
+            <header className="shadow-sm   ">
+                <h1 style={{ fontFamily: 'logo' }}
+                    className="text-black text-center font-normal text-4xl">Livraria</h1>
                 {childrenHeader}
                 <div className="   flex flex-row-reverse">
                     <Menu admPage={admPage} cadastro={cadastro}
                         livros={livros} mudarCastro={mudarCastro} />
                 </div>
             </header>
-            <main className="bg-gray-200" >
+            <main style={{backgroundColor: '#ffff'}}>
                 {children}
             </main>
-
-
             <Footer />
             <ToastContainer position="top-center"
                 autoClose={6000}
@@ -92,7 +92,7 @@ const Menu: React.FC<menuProps> = ({ cadastro, livros, admPage, mudarCastro }) =
     }
 
     return (
-        <div className=" flex flex-col items-end z-50">
+        <div className=" flex flex-col items-end z-50 absolute">
             <i onClick={abriMenu} className=" material-icons hover:cursor-pointer -my-2  text-black menu">more_vert</i>
             <div className={` ${estiloMenu} transition-all duration-500 max-h-screen  bg-slate-50 m-0 border border-gray-300  mt-1.5`}>
                 <ul className={`text-center font-serif `}>
@@ -116,7 +116,8 @@ const Menu: React.FC<menuProps> = ({ cadastro, livros, admPage, mudarCastro }) =
 
 export const Footer: React.FC = () => {
     return (
-        <footer className=" absolute w-full  py-5 border border-gray-50  bg-gray-300 ">
+        <footer style={{backgroundColor: '#9a9a89'}}
+        className=" absolute w-full  py-5 border border-gray-50  ">
             <p className="text-gray-700 text-center ">Desenvolvido por Paulo Oliveira</p>
         </footer>
     )
