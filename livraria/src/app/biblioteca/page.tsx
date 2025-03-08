@@ -128,7 +128,7 @@ export default function Biblioteca() {
 
     return (
         <Template cadastro={true} livros={true}  childrenHeader={<BarraPesquisa pesquisar={exibirResultado} onChange={event => setTitulo(event.target.value)} />}>
-            <div className="bg-gray-200">
+            <div className="bg-transparent">
                 {
                     <>
                         <AreaFiltro onChange={selecionarGenero} />

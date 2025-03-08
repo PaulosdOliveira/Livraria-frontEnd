@@ -1,20 +1,6 @@
 'use client'
 
 
-interface PrincipalComponente {
-    children?: React.ReactNode;
-}
-
-
-
-
-export const Principal: React.FC<PrincipalComponente> = ({ children }) => {
-    return (
-        <>
-            {children}
-        </>
-    )
-}
 
 interface sessaoGeneroProps {
     genero?: "DRAMA" | "ROMANCE" | "CIENCIA" | "TERROR" | "COMEDIA" | "SUSPENSE";

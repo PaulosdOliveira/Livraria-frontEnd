@@ -19,15 +19,18 @@ export const Template: React.FC<templateProps> = ({ children, childrenHeader, ca
 
     return (
         <>
-            <header className="shadow-lg border border-gray-200 my-1 ">
-
+            <header className="shadow-lg border border-gray-200  ">
                 {childrenHeader}
-                <div className="  flex flex-row-reverse">
+                <div className="   flex flex-row-reverse">
                     <Menu admPage={admPage} cadastro={cadastro}
                         livros={livros} mudarCastro={mudarCastro} />
                 </div>
             </header>
-            {children}
+            <main className="bg-gray-200" >
+                {children}
+            </main>
+
+
             <Footer />
             <ToastContainer position="top-center"
                 autoClose={6000}
