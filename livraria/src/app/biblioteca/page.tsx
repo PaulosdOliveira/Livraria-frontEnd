@@ -41,27 +41,27 @@ export default function Biblioteca() {
     //Método de consulta padrao
     async function buscarLivros() {
         //Consultado livros de ROMANCE
-        const listaRomance = await livroService.buscarLivros("ROMANCE", "");
+        const listaRomance = await livroService.buscarSeesaoGenero("ROMANCE");
         setROMANCE(listaRomance);
 
         //Consultado livros de CIENCIA
-        const listaCiencia = await livroService.buscarLivros("CIENCIA", "");
+        const listaCiencia = await livroService.buscarSeesaoGenero("CIENCIA");
         setCIENCIA(listaCiencia);
 
         //Consultado livros de DRAMA
-        const listaDrama = await livroService.buscarLivros("DRAMA", "");
+        const listaDrama = await livroService.buscarSeesaoGenero("DRAMA");
         setDRAMA(listaDrama);
 
         //Consultado livros de SUSPENSE
-        const listaSuspense = await livroService.buscarLivros("SUSPENSE", "");
+        const listaSuspense = await livroService.buscarSeesaoGenero("SUSPENSE");
         setSUSPENSE(listaSuspense);
 
         //Consultado livros de TERROR
-        const listaTerror = await livroService.buscarLivros("TERROR", "");
+        const listaTerror = await livroService.buscarSeesaoGenero("TERROR");
         setTERROR(listaTerror);
 
         //Consultado livros de COMEDIA
-        const listaComedia = await livroService.buscarLivros("COMEDIA", "");
+        const listaComedia = await livroService.buscarSeesaoGenero("COMEDIA");
         setCOMEDIA(listaComedia);
     }
 
@@ -138,13 +138,11 @@ export default function Biblioteca() {
                             <LivrosPesquisa voltar={ () => setPesquisou(false)}>{resultadoPesquisa()}</LivrosPesquisa>
                         </RenderIf>
                     </>
-
                 }
         </Template>
 
     )
 }
-
 
 //Renderiza a barra de pesquisa no header
 interface barraProps {

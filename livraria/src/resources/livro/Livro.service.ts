@@ -25,6 +25,18 @@ class UseLivroService {
 
     }
 
+    //Buscar sessão genero
+    async buscarSeesaoGenero(genero: string): Promise<Livro[]> {
+        const url = this.urlBase + "/sessao-genero?genero=" + genero;
+        const usuarioLogado = UseAuth().getSessaoUsuario();
+        const response = await fetch(url, {
+            headers: {
+                "Authorization": `Bearer ${usuarioLogado?.accessToken}`
+            }
+        });
+        return await response.json();
+    }
+
     //Salvar novo livro
     async salvarLivro(dados: FormData) {
         const url = this.urlBase;
