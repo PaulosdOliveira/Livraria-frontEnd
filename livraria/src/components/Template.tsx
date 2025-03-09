@@ -92,7 +92,7 @@ const Menu: React.FC<menuProps> = ({ cadastro, livros, admPage, mudarCastro }) =
     }
 
     return (
-        <div className=" flex flex-col items-end z-50 absolute">
+        <div className=" flex flex-col items-end z-50 absolute  mr-5">
             <i onClick={abriMenu} className=" material-icons hover:cursor-pointer -my-2  text-black menu">more_vert</i>
             <div className={` ${estiloMenu} transition-all duration-500 max-h-screen  bg-slate-50 m-0 border border-gray-300  mt-1.5`}>
                 <ul className={`text-center font-serif `}>

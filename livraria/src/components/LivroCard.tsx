@@ -1,18 +1,33 @@
 'use client'
 
 import { CompraService } from "@/resources/Compra/CompraService"
+import { notificacao } from "@/components/notificacao/index"
+import { useState } from "react";
 
 interface cardProps {
     titulo?: string;
     autor?: string;
     urlFoto?: string;
     preco?: string;
+    comprado?: boolean;
 }
 
-export const LivroCard: React.FC<cardProps> = ({ autor, titulo, urlFoto, preco }) => {
+export const LivroCard: React.FC<cardProps> = ({ autor, titulo, urlFoto, preco, comprado }) => {
 
-    function comprar(tituloLivro: string ) {
-        CompraService().compraLivro(tituloLivro);
+    const notificador = notificacao();
+    const [textoBotao, setTextoBotao] = useState<string>(comprado? "Ver livro" : "Comprar");
+    
+    function comprar(tituloLivro: string) {
+        const resposta = CompraService().compraLivro(tituloLivro);
+        resposta.then((resposta) => {
+            console.log(resposta.status);
+            if (resposta.status === 200) {
+                setTextoBotao("Ver livro")
+                notificador.notificar("Compra realizada", "success");
+            } else if (resposta.status === 409) {
+                notificador.notificar(resposta.erro, "error");
+            }
+        })
     }
 
     return (
@@ -23,7 +38,9 @@ export const LivroCard: React.FC<cardProps> = ({ autor, titulo, urlFoto, preco }
                 <h4 className="w-full  font-sans pl-3  text-gray-700">{autor}</h4>
                 <h2 className=" w-full font-thin text-base  text-right pr-3 " >{preco}</h2>
                 <div className=" w-full pl-2">
-                    <button onClick={() => comprar(titulo + "")} type="button" className="text-white z-50  font-serif bg-black p-1 rounded-md" >Comprar</button>
+                    <button onClick={ !comprado?  () => comprar(titulo + "") : undefined} type="button" className="text-white z-50  font-serif bg-black p-1 rounded-md" >
+                     {textoBotao}
+                    </button>
                 </div>
             </div>
         </>

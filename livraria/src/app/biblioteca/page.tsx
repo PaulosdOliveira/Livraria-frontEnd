@@ -69,7 +69,7 @@ export default function Biblioteca() {
     function criarCard(livro: Livro) {
         return (
             <LivroCard key={livro.titulo} autor={livro.nomeAutor} titulo={livro.titulo}
-                urlFoto={livro.urlImagem} preco={livro.preco} />
+                urlFoto={livro.urlImagem} preco={livro.preco} comprado={livro.comprado} />
         )
     }
 

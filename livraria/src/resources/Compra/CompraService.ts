@@ -1,6 +1,14 @@
 
 import { UseAuth } from "@/resources/Usuarios/LoginService"
 
+
+
+
+interface resposta {
+    status: number;
+    erro: string;
+}
+
 class Compra {
 
     urlBase = "http://localhost:8080/compras";
@@ -15,7 +23,18 @@ class Compra {
                 'Authorization': `Bearer ${usuarioLogado?.accessToken}`
             }
         })
-        return resposta;
+
+        const status = resposta.status;
+        const resultado: resposta = { erro: "", status: status };
+
+        if (status === 409) {
+            const erro = await resposta.json();
+            resultado.erro = erro.erro;
+        }
+
+
+
+        return resultado;
 
     }
 

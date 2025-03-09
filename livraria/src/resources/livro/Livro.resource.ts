@@ -1,4 +1,3 @@
-import { UUID } from "crypto"
 
 export class Livro {
     titulo?: string
@@ -9,4 +8,5 @@ export class Livro {
     nomeAutor?: string
     vendas?: number
     urlImagem?: string
+    comprado?: boolean;
 }
