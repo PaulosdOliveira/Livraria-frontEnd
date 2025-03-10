@@ -10,3 +10,9 @@ export class Livro {
     urlImagem?: string
     comprado?: boolean;
 }
+
+
+export class PaginaLivro{
+    lista?: Livro[];
+    qtdPaginas?: number;
+}

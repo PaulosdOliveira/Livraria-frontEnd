@@ -1,5 +1,5 @@
 import { UseAuth } from '../Usuarios/LoginService';
-import { Livro } from './Livro.resource'
+import { Livro , PaginaLivro} from './Livro.resource'
 
 
 
@@ -13,8 +13,10 @@ class UseLivroService {
 
 
     //Metodo para buscar livros por genero e/ou titulo
-    async buscarLivros(genero: "DRAMA" | "ROMANCE" | "CIENCIA" | "TERROR" | "COMEDIA" | "SUSPENSE" | undefined, titulo: string | undefined): Promise<Livro[]> {
-        const url = this.urlBase + "?genero=" + genero + "&titulo=" + titulo;
+    async buscarLivros( genero: "DRAMA" | "ROMANCE" | "CIENCIA" | "TERROR" | "COMEDIA" | "SUSPENSE" | undefined,
+         titulo: string | undefined, numeroPagina: number): Promise<PaginaLivro> {
+
+        const url = this.urlBase + "?genero=" + genero + "&titulo=" + titulo  + "&numero-pagina=" + numeroPagina ;
         const usuarioLogado = UseAuth().getSessaoUsuario();
         const response = await fetch(url, {
             headers: {

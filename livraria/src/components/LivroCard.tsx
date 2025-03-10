@@ -16,6 +16,7 @@ export const LivroCard: React.FC<cardProps> = ({ autor, titulo, urlFoto, preco, 
 
     const notificador = notificacao();
     const [textoBotao, setTextoBotao] = useState<string>(comprado? "Ver livro" : "Comprar");
+    const [comprou, setComprou] = useState<boolean | undefined>(comprado);
     
     function comprar(tituloLivro: string) {
         const resposta = CompraService().compraLivro(tituloLivro);
@@ -24,10 +25,15 @@ export const LivroCard: React.FC<cardProps> = ({ autor, titulo, urlFoto, preco, 
             if (resposta.status === 200) {
                 setTextoBotao("Ver livro")
                 notificador.notificar("Compra realizada", "success");
+                setComprou(true);
             } else if (resposta.status === 409) {
                 notificador.notificar(resposta.erro, "error");
             }
         })
+    }
+
+    function verLivro(){
+        notificador.notificar("Bom dia", 'info');
     }
 
     return (
@@ -38,7 +44,7 @@ export const LivroCard: React.FC<cardProps> = ({ autor, titulo, urlFoto, preco, 
                 <h4 className="w-full  font-sans pl-3  text-gray-700">{autor}</h4>
                 <h2 className=" w-full font-thin text-base  text-right pr-3 " >{preco}</h2>
                 <div className=" w-full pl-2">
-                <button onClick={ !comprado?  () => comprar(titulo + "") : undefined} type="button" className={`${comprado? "bg-black": "bg-red-800"}
+                <button onClick={ !comprou?  () => comprar(titulo + "") : verLivro} type="button" className={`${comprado? "bg-black": "bg-red-800"}
                         text-white z-50  font-serif p-1 rounded-md`} >
                      {textoBotao}
                     </button>

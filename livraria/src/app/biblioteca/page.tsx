@@ -2,7 +2,7 @@
 
 import { LivroCard } from "@/components/LivroCard";
 import { RenderIf, Template } from "@/components/Template"
-import { Livro } from "@/resources/livro/Livro.resource"
+import { Livro , PaginaLivro} from "@/resources/livro/Livro.resource"
 import { LivroService } from "@/resources/livro/Livro.service";
 import { useState } from "react";
 import { SessaoGenero, LivrosPesquisa } from "@/components/Livros/Livros"
@@ -21,7 +21,7 @@ export default function Biblioteca() {
     const [TERROR, setTERROR] = useState<Livro[]>([]);
     const [COMEDIA, setCOMEDIA] = useState<Livro[]>([]);
     const [SUSPENSE, setSUSPENSE] = useState<Livro[]>([]);
-    const [pesquisa,setPesquisa] = useState<Livro[]>([]);
+    const [pesquisa,setPesquisa] = useState<PaginaLivro>();
     //** */
 
     const [bemvindo, setBemvindo] = useState<boolean>(true);
@@ -96,8 +96,8 @@ export default function Biblioteca() {
 
 
     //Método de consulta do usuário
-    async function pesquisarLivros(genero: any, titulo: string | undefined) {
-        const livros = await livroService.buscarLivros(genero, titulo);
+    async function pesquisarLivros(genero: any, titulo: string | undefined, numeroPagina: number = 0) {
+        const livros = await livroService.buscarLivros(genero, titulo, numeroPagina);
         //Usando a lista de livros de romance como suporte
         setPesquisa(livros);
         setPesquisou(true);
@@ -105,14 +105,15 @@ export default function Biblioteca() {
 
     //Exibindo o resultado da pesquisa
     function resultadoPesquisa() {
-        if (!pesquisa.length) {
+        console.log(pesquisa?.lista)
+        if (!pesquisa?.lista?.length) {
             return (
                 <h1 className="text-black">Not found</h1>
             )
 
         }
         return (
-            pesquisa.map(criarCard)
+            pesquisa.lista.map(criarCard)
         )
     }
 
