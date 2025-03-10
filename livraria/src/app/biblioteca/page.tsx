@@ -2,10 +2,12 @@
 
 import { LivroCard } from "@/components/LivroCard";
 import { RenderIf, Template } from "@/components/Template"
-import { Livro , PaginaLivro} from "@/resources/livro/Livro.resource"
+import { Livro, PaginaLivro } from "@/resources/livro/Livro.resource"
 import { LivroService } from "@/resources/livro/Livro.service";
 import { useState } from "react";
 import { SessaoGenero, LivrosPesquisa } from "@/components/Livros/Livros"
+import { NumeroPagina } from "@/components/numeroPagina/NumeroPagina"
+
 
 
 export default function Biblioteca() {
@@ -21,7 +23,7 @@ export default function Biblioteca() {
     const [TERROR, setTERROR] = useState<Livro[]>([]);
     const [COMEDIA, setCOMEDIA] = useState<Livro[]>([]);
     const [SUSPENSE, setSUSPENSE] = useState<Livro[]>([]);
-    const [pesquisa,setPesquisa] = useState<PaginaLivro>();
+    const [pesquisa, setPesquisa] = useState<PaginaLivro>();
     //** */
 
     const [bemvindo, setBemvindo] = useState<boolean>(true);
@@ -105,7 +107,6 @@ export default function Biblioteca() {
 
     //Exibindo o resultado da pesquisa
     function resultadoPesquisa() {
-        console.log(pesquisa?.lista)
         if (!pesquisa?.lista?.length) {
             return (
                 <h1 className="text-black">Not found</h1>
@@ -118,8 +119,9 @@ export default function Biblioteca() {
     }
 
     //Pesquisando  ao clicar na lupa
-    function exibirResultado() {
-        pesquisarLivros(genero, titulo);
+    function exibirResultado(pagina: number) {
+        pesquisarLivros(genero, titulo, pagina);
+        window.scrollTo(0,0);
     }
 
     //Pesquisar ao selecionar um genero
@@ -127,19 +129,50 @@ export default function Biblioteca() {
         pesquisarLivros(generoSelecionado, titulo);
     }
 
+    // Gerando o componente de número
+    function gerarNumeros(numero: number) {
+        return (
+            <NumeroPagina onClick={() => exibirResultado(numero - 1)}
+                key={numero} numero={numero} />
+        )
+    }
+
+    // Renderizando componente de paginação
+    function renderizarNumeros(qtdPaginas: number | undefined) {
+        const numeros = [];
+        if (qtdPaginas && qtdPaginas > 1) {
+            for (let i = 1; i <= qtdPaginas; i++) {
+                numeros.push(i);
+            }
+            return (
+                <div className=" flex items-center">
+                    <div style={{width: '40%'}}
+                    className=" m-auto  flex flex-wrap"
+                    >
+                        {numeros.map(gerarNumeros)}
+                    </div>
+                </div>
+
+            );
+        }
+
+    }
+
+
     return (
-        <Template cadastro={true} livros={true}  childrenHeader={<BarraPesquisa pesquisar={exibirResultado} onChange={event => setTitulo(event.target.value)} />}>
-                {
-                    <>
-                        <AreaFiltro onChange={selecionarGenero} />
-                        <RenderIf condicao={!pesquisou}>
-                            {renderizarCards()}
-                        </RenderIf>
-                        <RenderIf condicao={pesquisou}>
-                            <LivrosPesquisa voltar={ () => setPesquisou(false)}>{resultadoPesquisa()}</LivrosPesquisa>
-                        </RenderIf>
-                    </>
-                }
+        <Template cadastro={true} livros={true} childrenHeader={<BarraPesquisa pesquisar={() => exibirResultado(0)} onChange={event => setTitulo(event.target.value)} />}>
+            {
+                <>
+                    <AreaFiltro onChange={selecionarGenero} />
+                    <RenderIf condicao={!pesquisou}>
+                        {renderizarCards()}
+                    </RenderIf>
+                    <RenderIf condicao={pesquisou}>
+                        <LivrosPesquisa voltar={() => setPesquisou(false)}>{resultadoPesquisa()}</LivrosPesquisa>
+                        {pesquisou ? renderizarNumeros(pesquisa?.qtdPaginas) : false}
+                    </RenderIf>
+                </>
+            }
         </Template>
 
     )

@@ -3,10 +3,10 @@
 import { Button } from "@/components/Button/Button";
 import { Input } from "@/components/InputText/Input";
 import { ErroCampo } from "@/components/InputText/Erro";
-import { Footer, RenderIf } from "@/components/Template"; import { useState } from "react";
+import { Footer } from "@/components/Template"; 
 import { useFormik } from 'formik'
 import { FormEsquema, ValidarForm, formProps } from '@/app/login/FormSchem'
-import { AccessToken, Credenciais, Usuario } from '@/resources/Usuarios/Usuarios.resources'
+import { AccessToken, Credenciais } from '@/resources/Usuarios/Usuarios.resources'
 import { UseAuth } from '@/resources/Usuarios/LoginService'
 import { useRouter } from 'next/navigation'
 
@@ -24,7 +24,6 @@ export default function Login() {
 
     });
 
-
     async function onSubmit(values: formProps) {
 
         try {
@@ -36,8 +35,6 @@ export default function Login() {
 
         }
     }
-
-
 
     return (
         <>

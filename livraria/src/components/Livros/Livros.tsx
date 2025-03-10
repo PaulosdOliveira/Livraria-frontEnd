@@ -32,22 +32,20 @@ interface pesquisaPorps {
 export const LivrosPesquisa: React.FC<pesquisaPorps> = ({ children, voltar }) => {
 
 
-
     function CriarNumeros(numero: number) {
         return (
-            <NumeroPagina key={numero} numero={numero} />
+            <NumeroPagina  key={numero} numero={numero} />
         )
     }
 
     function renderizarNumero(qtdPaginas: number) {
         const numeros = new Array();
-        for (let i = 0; i <= qtdPaginas; i++) {
+        for (let i = 1; i <= qtdPaginas; i++) {
             numeros.push(i);
         }
         return (
             numeros.map(CriarNumeros)
         )
-
     }
 
     return (
@@ -60,9 +58,7 @@ export const LivrosPesquisa: React.FC<pesquisaPorps> = ({ children, voltar }) =>
                     {children}
                     <div onClick={voltar} className="text-white text-center pt-1 material-icons bg-black z-50 absolute -translate-x-12 mt-1 rounded-full h-8 w-8 hover:cursor-pointer hover:-translate-y-0.5  transition duration-700">home</div>
                 </div>
-
             </section>
-            {renderizarNumero(4)}
         </>
     )
 }
@@ -70,12 +66,15 @@ export const LivrosPesquisa: React.FC<pesquisaPorps> = ({ children, voltar }) =>
 
 interface numeroPaginaProps {
     numero: number;
+    onClick?: (event: any) => void;
 }
 
-const NumeroPagina: React.FC<numeroPaginaProps> = ({ numero }) => {
+export const NumeroPagina: React.FC<numeroPaginaProps> = ({ numero, onClick }) => {
 
     return (
-        <p className="text-black">{numero} pp</p>
+        <p onClick={() => onClick? onClick(numero) : undefined}
+        className="text-white text-center  hover:-translate-y-0.5 cursor-pointer
+         p-1.5 w-9 h-9 mx-0.5 bg-gray-500 inline-block rounded-full transition-all duration-300">{numero}</p>
     )
 }
 
