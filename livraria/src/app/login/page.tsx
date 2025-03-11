@@ -49,7 +49,8 @@ export default function Login() {
                             <Button type="submit" value="Entrar" estilo="bg-white border  text-black  w-80 h-10 mt-3 rounded-full hover:cursor-pointer" />
                         </div>
                         <hr className="border-black w-80 m-auto mt-3" />
-                        <Button type="button" value="Criar conta" estilo="bg-gray-100  text-center  text-black  py-1.5 w-80 h-10 mt-3 ml-8 rounded-full hover:cursor-pointer" />
+                        <Button  onclick={() => router.push("/cadastro")}
+                        type="button" value="Criar conta" estilo="bg-gray-100  text-center  text-black  py-1.5 w-80 h-10 mt-3 ml-8 rounded-full hover:cursor-pointer" />
                     </form>
                 </div>
             </main>

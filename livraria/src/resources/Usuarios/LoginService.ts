@@ -2,7 +2,6 @@
 
 import { Credenciais, AccessToken, TokenSessaoUsuario, Usuario, } from "./Usuarios.resources"
 import jwt from 'jwt-decode'
-import { useRouter } from "next/navigation"
 
 class LoginService {
     urlBase: string = "http://localhost:8080/usuario";
@@ -27,7 +26,7 @@ class LoginService {
 
 
     //Método para cadastrar um usuário
-    async cadastrar(credenciais: Usuario): Promise<void> {
+    async cadastrar(credenciais: Usuario) {
         const resposta = await fetch(this.urlBase, {
             method: 'POST',
             body: JSON.stringify(credenciais),
@@ -37,11 +36,11 @@ class LoginService {
         });
 
         if (resposta.status === 201) {
-            useRouter().push("/login");
+          return resposta.status;
         }
         if (resposta.status === 409) {
-            const erroBack = await resposta.json();
-            throw new Error(erroBack.Error);
+            const erro = await resposta.json();
+            return erro.erro;
         }
     }
 

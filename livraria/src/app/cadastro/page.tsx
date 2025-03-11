@@ -8,15 +8,18 @@ import { cadastroPorps, ValidarForm, Cadastro } from "./cadastroSchem"
 import { useFormik } from "formik"
 import { Usuario } from "@/resources/Usuarios/Usuarios.resources"
 import { UseAuth } from "@/resources/Usuarios/LoginService"
-import { useRouter } from 'next/navigation'
-
+import { notificacao } from "@/components/notificacao"
+import { useRouter } from "next/router"
+import { useState } from "react"
 
 
 
 export default function () {
 
-    const router = useRouter();
+    const notificador = notificacao();
     const auth = UseAuth();
+    const [resutado, setResutado] = useState<string>("");
+
 
 
     const { values, errors, handleSubmit, handleChange, resetForm } = useFormik<cadastroPorps>({
@@ -27,9 +30,17 @@ export default function () {
 
     async function submit(values: cadastroPorps) {
         try {
-
             const usuario: Usuario = { nome: values.nome, email: values.email, senha: values.senha }
-            await auth.cadastrar(usuario);
+            await auth.cadastrar(usuario).then((resposta) => {
+                console.log(resposta)
+                if (resposta === 201) {
+                    setResutado("Conta criada")
+                    window.location.replace("/login");
+                } else {
+                    setResutado(resposta);
+                }
+                notificador.notificar(resposta, "error");
+            })
 
         } catch (error) {
 
@@ -39,8 +50,9 @@ export default function () {
     return (
         <>
             <main className="pt-10" style={{ height: '100vh' }}>
-                <div className=" rounded-lg border border-gray-300 shadow-lg w-96 h-96 m-auto">
-                    <form onSubmit={handleSubmit} className="  w-full h-full " >
+                <span className="text-red-600 text-center block  m-auto">{resutado}</span>
+                <div className=" rounded-lg border border-gray-300 shadow-lg w-96  max-h-screen pb-5 m-auto">
+                    <form onSubmit={handleSubmit} className="  w-full  " >
                         <div id="caixas">
                             <Input onChange={handleChange} value={values.nome} id="nome" placeholder="Nome" estilo={`form`} />
                             <ErroCampo erro={errors.nome} />
