@@ -20,7 +20,7 @@ export const Template: React.FC<templateProps> = ({ children, childrenHeader, ca
     return (
         <>
             <header className="shadow-sm   ">
-                <h1 style={{ fontFamily: 'logo' }}
+                <h1 style={{ fontFamily: 'serif' }}
                     className="text-black text-center font-normal text-4xl">Livraria</h1>
                 {childrenHeader}
                 <div className="   flex flex-row-reverse">

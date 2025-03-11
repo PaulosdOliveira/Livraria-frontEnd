@@ -4,6 +4,7 @@ import { UseAuth } from "@/resources/Usuarios/LoginService"
 
 
 
+
 interface resposta {
     status: number;
     erro: string;
@@ -12,7 +13,6 @@ interface resposta {
 class Compra {
 
     urlBase = "http://localhost:8080/compras";
-
 
     async compraLivro(tituloLivro: string) {
         const url = this.urlBase + "/" + tituloLivro;
@@ -31,10 +31,22 @@ class Compra {
             const erro = await resposta.json();
             resultado.erro = erro.erro;
         }
-
-
-
         return resultado;
+
+    }
+
+
+    async meusLivros()  {
+        const usuarioLogado = UseAuth().getSessaoUsuario();
+        const resposta = await fetch(this.urlBase, {
+            headers: {
+                'Authorization': `Bearer ${usuarioLogado?.accessToken}`
+            }
+        })
+
+        if (resposta) {
+            return await resposta.json();
+        }
 
     }
 
