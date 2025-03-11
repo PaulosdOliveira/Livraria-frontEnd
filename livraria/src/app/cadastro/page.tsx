@@ -9,8 +9,9 @@ import { useFormik } from "formik"
 import { Usuario } from "@/resources/Usuarios/Usuarios.resources"
 import { UseAuth } from "@/resources/Usuarios/LoginService"
 import { notificacao } from "@/components/notificacao"
-import { useRouter } from "next/router"
+import { BarraPesquisa } from '@/app/biblioteca/page'
 import { useState } from "react"
+import { Header } from "@/components/header/Cabecalho"
 
 
 

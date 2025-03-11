@@ -7,6 +7,7 @@ import { LivroService } from "@/resources/livro/Livro.service";
 import { useState } from "react";
 import { SessaoGenero, LivrosPesquisa } from "@/components/Livros/Livros"
 import { NumeroPagina } from "@/components/numeroPagina/NumeroPagina"
+import { Header } from "@/components/header/Cabecalho";
 
 
 
@@ -121,7 +122,7 @@ export default function Biblioteca() {
     //Pesquisando  ao clicar na lupa
     function exibirResultado(pagina: number) {
         pesquisarLivros(genero, titulo, pagina);
-        window.scrollTo(0,0);
+        window.scrollTo(0, 0);
     }
 
     //Pesquisar ao selecionar um genero
@@ -146,8 +147,8 @@ export default function Biblioteca() {
             }
             return (
                 <div className=" flex items-center">
-                    <div style={{width: '40%'}}
-                    className=" m-auto  flex flex-wrap"
+                    <div style={{ width: '40%' }}
+                        className=" m-auto  flex flex-wrap"
                     >
                         {numeros.map(gerarNumeros)}
                     </div>
@@ -160,7 +161,10 @@ export default function Biblioteca() {
 
 
     return (
-        <Template cadastro={true} livros={true} childrenHeader={<BarraPesquisa pesquisar={() => exibirResultado(0)} onChange={event => setTitulo(event.target.value)} />}>
+        <Template cadastro={true} livros={true}
+            header={<Header home={() => setPesquisou(false)}
+                barraPesquisa={<BarraPesquisa onChange={(event) => setTitulo(event.target.value)}
+                                   pesquisar={() => exibirResultado(0)}    />} />}>
             {
                 <>
                     <AreaFiltro onChange={selecionarGenero} />
@@ -168,7 +172,7 @@ export default function Biblioteca() {
                         {renderizarCards()}
                     </RenderIf>
                     <RenderIf condicao={pesquisou}>
-                        <LivrosPesquisa voltar={() => setPesquisou(false)}>{resultadoPesquisa()}</LivrosPesquisa>
+                        <LivrosPesquisa >{resultadoPesquisa()}</LivrosPesquisa>
                         {pesquisou ? renderizarNumeros(pesquisa?.qtdPaginas) : false}
                     </RenderIf>
                 </>
@@ -181,16 +185,18 @@ export default function Biblioteca() {
 //Renderiza a barra de pesquisa no header
 interface barraProps {
     onChange?: (event: any) => void;
-    pesquisar: (event: any) => void;
+    pesquisar?: (event: any) => void;
 }
 
-const BarraPesquisa: React.FC<barraProps> = ({ onChange, pesquisar }) => {
+export const BarraPesquisa: React.FC<barraProps> = ({ onChange, pesquisar }) => {
     return (
-        <div className="inputHeader m-auto ">
-            <div className=" px-1   rounded-full flex  mt-3.5 max-w-72 m-auto h-8 ">
-                <input onChange={onChange} type="text" placeholder="Pesquisar" className="h-10 border border-gray-400   size-full  text-black text-center  rounded-full m-auto" />
-                <i onClick={pesquisar}
-                    className="hover:cursor-pointer  my-2.5 absolute translate-x-72  w-auto h-auto material-icons  text-gray-400  scale-125">search</i>
+        <div className="inputHeader m-auto">
+            <div style={{ minWidth: '350px' }}
+                className=" px-1  rounded-full flex m-auto h-8 ">
+                <input onChange={onChange} type="text" placeholder="Pesquisar" className="h-11 border border-gray-400   size-full  text-black  rounded-full pl-5 m-auto" />
+                <i style={{transform: 'translate(1270%, 0px)'}}
+                onClick={pesquisar}
+                    className="hover:cursor-pointer  my-2.5 absolute w-auto h-auto material-icons  text-gray-400  scale-125">search</i>
             </div>
         </div>
     )
